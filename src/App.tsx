@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg';
+// import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg'
 import './App.css'
+import Button from '@mui/material/Button';
+
 
 function App() {
   const [count, setButtonLabel] = useState('x')
@@ -15,6 +17,7 @@ function App() {
           {count}
         </button>
       </div>
+      <Button variant="contained">Hello World - MUI</Button>
     </>
   )
 }
