@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 
 
 function App() {
-  const [count, setButtonLabel] = useState('x')
+  const [buttonLabel, setButtonLabel] = useState('x')
 
   return (
     <>
@@ -14,7 +14,7 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setButtonLabel((label) => `${label}x`)}>
-          {count}
+          {buttonLabel}
         </button>
       </div>
       <Button variant="contained">Hello World - MUI</Button>
