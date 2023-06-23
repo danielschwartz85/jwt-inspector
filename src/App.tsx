@@ -1,21 +1,26 @@
-import { useCallback, useState } from 'react'
-// import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg'
-import './App.css'
-import Button from '@mui/material/Button'
+import { Paper, styled } from '@mui/material'
+import Grid from '@mui/material/Grid'
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  textAlign: 'center',
+  borderStyle: 'dotted',
+}))
 
 function App() {
-  const [buttonLabel, setButtonLabel] = useState('x')
-  const oc = useCallback(() => setButtonLabel((label) => `${label}x`), [])
   return (
-    <>
-      <img src={viteLogo} className="logo" alt="Vite logo" />
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={oc}>{buttonLabel}</button>
-      </div>
-      <Button variant="contained">Hello World - MUI</Button>
-    </>
+    <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
+      <Grid item md={8} xs={12}>
+        <Item sx={{ height: '400px' }}>jwt</Item>
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <Item sx={{ height: '400px' }}>See jwt</Item>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <Item>footer</Item>
+      </Grid>
+    </Grid>
   )
 }
 
