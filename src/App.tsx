@@ -1,5 +1,8 @@
-import { Paper, styled } from '@mui/material'
+import { Box, Paper, styled } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import React from 'react'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -9,18 +12,45 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode]
+  )
+
   return (
-    <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
-      <Grid item md={8} xs={12}>
-        <Item sx={{ height: '400px' }}>jwt</Item>
-      </Grid>
-      <Grid item md={4} xs={12}>
-        <Item sx={{ height: '400px' }}>See jwt</Item>
-      </Grid>
-      <Grid item md={12} xs={12}>
-        <Item>footer</Item>
-      </Grid>
-    </Grid>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          position: 'fixed',
+          overflow: 'auto',
+          height: '100%',
+          width: '100%',
+          top: 0,
+          left: 0,
+          bgcolor: 'background.default',
+          color: 'text.primary',
+        }}
+      >
+        <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
+          <Grid item md={8} xs={12}>
+            <Item sx={{ height: '400px' }}>jwt</Item>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <Item sx={{ height: '400px' }}>See jwt</Item>
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <Item>footer</Item>
+          </Grid>
+        </Grid>
+      </Box>
+    </ThemeProvider>
   )
 }
 
