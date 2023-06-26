@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React from 'react'
+import JwtInput from './components/jwtInput'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -37,12 +38,12 @@ function App() {
           bgcolor: 'background.default',
         }}
       >
-        <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
-          <Grid item md={8} xs={12}>
-            <Item sx={{ height: '400px' }}>jwt</Item>
-          </Grid>
+        <Grid container sx={{ px: 8, py: 4 }} spacing={4}>
           <Grid item md={4} xs={12}>
-            <Item sx={{ height: '400px' }}>See jwt</Item>
+            <JwtInput />
+          </Grid>
+          <Grid item md={8} xs={12}>
+            <Item sx={{ height: '500px' }}>See jwt</Item>
           </Grid>
           <Grid item md={12} xs={12}>
             <Item>footer</Item>
