@@ -35,7 +35,6 @@ function App() {
           top: 0,
           left: 0,
           bgcolor: 'background.default',
-          color: 'text.primary',
         }}
       >
         <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
