@@ -3,7 +3,9 @@ import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React from 'react'
-import JwtInput from './components/jwtInput'
+import Encoded from './components/encoded'
+import Decoded from './components/decoded'
+import Secret from './components/secret'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,7 +26,6 @@ function App() {
       }),
     [prefersDarkMode]
   )
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -36,17 +37,18 @@ function App() {
           top: 0,
           left: 0,
           bgcolor: 'background.default',
+          color: 'text.primary',
         }}
       >
-        <Grid container sx={{ px: 8, py: 4 }} spacing={4}>
+        <Grid container sx={{ px: 8, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
-            <JwtInput />
+            <Encoded />
           </Grid>
           <Grid item md={8} xs={12}>
-            <Item sx={{ height: '500px' }}>See jwt</Item>
+            <Decoded />
           </Grid>
           <Grid item md={12} xs={12}>
-            <Item>footer</Item>
+            <Secret />
           </Grid>
         </Grid>
       </Box>

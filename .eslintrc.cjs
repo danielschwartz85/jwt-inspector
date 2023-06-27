@@ -9,7 +9,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh', 'prettier', 'eslint-plugin-react-hooks'],
+  plugins: ['react-refresh', 'prettier', 'eslint-plugin-react-hooks', 'unused-imports'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     'prettier/prettier': [
@@ -21,5 +21,6 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'unused-imports/no-unused-imports-ts': 'warn',
   },
 }
