@@ -1,20 +1,16 @@
-import { Box, Paper, styled } from '@mui/material'
+import { Box } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import React from 'react'
-import Encoded from './components/encoded'
-import Decoded from './components/decoded'
+import React, { useCallback, useState } from 'react'
+import Encoded, { IEncodedProps } from './components/encoded'
+import Decoded, { IDecodedProps } from './components/decoded'
 import Secret from './components/secret'
+import { decode, DefaultDecoded } from './components/util'
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  textAlign: 'center',
-  borderStyle: 'dotted',
-}))
-
-function App() {
+export default function App() {
+  const [decoded, setDecoded] = useState(DefaultDecoded)
+  const [encoded, setEncoded] = useState('')
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
   const theme = React.useMemo(
@@ -26,6 +22,17 @@ function App() {
       }),
     [prefersDarkMode]
   )
+
+  const onEncodedChange: IEncodedProps['onChange'] = useCallback((value) => {
+    setEncoded(value)
+    const decoded = decode(value, 'tmp') || DefaultDecoded
+    setDecoded(({ secret }) => ({ ...decoded, secret }))
+  }, [])
+
+  const onDecodedChange: IDecodedProps['onChange'] = useCallback((fullPayload) => {
+    setDecoded(({ secret }) => ({ ...fullPayload, secret }))
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -42,10 +49,10 @@ function App() {
       >
         <Grid container sx={{ px: 8, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
-            <Encoded />
+            <Encoded value={encoded} onChange={onEncodedChange} />
           </Grid>
           <Grid item md={8} xs={12}>
-            <Decoded />
+            <Decoded fullPayload={decoded} onChange={onDecodedChange} />
           </Grid>
           <Grid item md={12} xs={12}>
             <Secret />
@@ -55,5 +62,3 @@ function App() {
     </ThemeProvider>
   )
 }
-
-export default App

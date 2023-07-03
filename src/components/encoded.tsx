@@ -1,12 +1,27 @@
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
 
-export default function Encoded() {
+export interface IEncodedProps {
+  value: string
+  onChange: (value: string) => void
+}
+
+export default function Encoded(props: IEncodedProps) {
+  const { value, onChange } = props
+
   return (
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
       <StyledCard>
-        <TextField placeholder="Paste JWT.." multiline rows={10} fullWidth={true} />
+        <TextField
+          placeholder="Paste JWT.."
+          multiline
+          rows={10}
+          fullWidth={true}
+          spellCheck={false}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
       </StyledCard>
     </>
   )
