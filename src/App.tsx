@@ -11,7 +11,7 @@ import { decode, DefaultDecoded, DefaultEncoded } from './components/util'
 export default function App() {
   const [decoded, setDecoded] = useState(DefaultDecoded)
   const [encoded, setEncoded] = useState(DefaultEncoded)
-  const [secret, setSecret] = useState()
+  // const [secret, setSecret] = useState()
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
   const theme = React.useMemo(
