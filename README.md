@@ -1,2 +1,2 @@
 # jwt-debugger
-### Fast static page for debugging JWTs
+### 🚀 Fast static page for debugging JWTs
