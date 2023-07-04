@@ -1,2 +1,3 @@
-# jwt-debugger
-### Fast static page for debugging JWTs
+# JWT Inspector
+### 🚀 A fast static page for debugging JWTs
+### 💾 With local storage management
