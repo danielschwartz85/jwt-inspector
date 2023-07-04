@@ -1,27 +1,21 @@
-export type IJwt = {
-  header: {
-    alg: string
-  }
-  payload: Record<string, unknown>
-  secret: string
-}
+import { IDecoded } from './decoded'
 
-export const DefaultDecoded: IJwt = {
+export const DefaultDecoded: IDecoded = {
   header: { alg: 'HS256' },
   payload: {
     name: 'John Doe',
     iat: 1516239022,
   },
-  secret: '',
 }
+
+export const DefaultEncoded = ''
 
 export const JsonStringSpace = 4 as const
 
-export function decode(token: string, secret: string): Pick<IJwt, 'header' | 'payload'> | null {
+export function decode(token: string, secret: string): IDecoded | null {
   try {
-    const header = { alg: '' }
-    const payload = {}
-    return { header, payload }
+    // TODO
+    return DefaultDecoded
   } catch (e) {
     return null
   }
