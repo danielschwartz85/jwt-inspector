@@ -15,7 +15,7 @@ export const DefaultDecoded: IJwt = {
   secret: '',
 }
 
-export const JsonStringSpace = 2 as const
+export const JsonStringSpace = 4 as const
 
 export function decode(token: string, secret: string): Pick<IJwt, 'header' | 'payload'> | null {
   try {
