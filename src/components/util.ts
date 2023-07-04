@@ -12,7 +12,8 @@ export const DefaultEncoded = ''
 
 export const JsonStringSpace = 4 as const
 
-export function decode(token: string, secret: string): IDecoded | null {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function decode(_token: string, _secret: string): IDecoded | null {
   try {
     // TODO
     return DefaultDecoded
