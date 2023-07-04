@@ -1,9 +1,14 @@
 import { Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import { IJwt, JsonStringSpace } from './util'
+import { JsonStringSpace } from './util'
 
-export type IDecoded = Omit<IJwt, 'secret'>
+export interface IDecoded {
+  header: {
+    alg: string
+  }
+  payload: Record<string, unknown>
+}
 
 export interface IDecodedProps {
   fullPayload: IDecoded

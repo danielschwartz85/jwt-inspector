@@ -6,11 +6,12 @@ import React, { useCallback, useState } from 'react'
 import Encoded, { IEncodedProps } from './components/encoded'
 import Decoded, { IDecodedProps } from './components/decoded'
 import Secret from './components/secret'
-import { decode, DefaultDecoded } from './components/util'
+import { decode, DefaultDecoded, DefaultEncoded } from './components/util'
 
 export default function App() {
   const [decoded, setDecoded] = useState(DefaultDecoded)
-  const [encoded, setEncoded] = useState('')
+  const [encoded, setEncoded] = useState(DefaultEncoded)
+  const [secret, setSecret] = useState()
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
   const theme = React.useMemo(
@@ -26,11 +27,11 @@ export default function App() {
   const onEncodedChange: IEncodedProps['onChange'] = useCallback((value) => {
     setEncoded(value)
     const decoded = decode(value, 'tmp') || DefaultDecoded
-    setDecoded(({ secret }) => ({ ...decoded, secret }))
+    setDecoded(decoded)
   }, [])
 
   const onDecodedChange: IDecodedProps['onChange'] = useCallback((fullPayload) => {
-    setDecoded(({ secret }) => ({ ...fullPayload, secret }))
+    setDecoded(fullPayload)
   }, [])
 
   return (
