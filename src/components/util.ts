@@ -1,4 +1,6 @@
-import { IDecoded } from './decoded'
+import { Jwt, verify } from 'jsonwebtoken'
+
+export type IDecoded = Pick<Jwt, 'header' | 'payload'>
 
 export const DefaultDecoded: IDecoded = {
   header: { alg: 'HS256' },
@@ -12,12 +14,11 @@ export const DefaultEncoded = ''
 
 export const JsonStringSpace = 4 as const
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function decode(_token: string, _secret: string): IDecoded | null {
+export function decode(token: string, secret: string): IDecoded | null {
   try {
-    // TODO
-    return DefaultDecoded
+    return verify(token, secret, { algorithms: ['HS256'], complete: true })
   } catch (e) {
+    // console.log('🚀 XXXXXX ~ file: util.ts:21 ~ decode ~ e:', e)
     return null
   }
 }
