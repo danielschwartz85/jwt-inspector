@@ -1,14 +1,7 @@
 import { Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import { JsonStringSpace } from './util'
-
-export interface IDecoded {
-  header: {
-    alg: string
-  }
-  payload: Record<string, unknown>
-}
+import { IDecoded, JsonStringSpace } from './util'
 
 export interface IDecodedProps {
   fullPayload: IDecoded

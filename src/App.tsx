@@ -8,7 +8,11 @@ import Decoded, { IDecodedProps } from './components/decoded'
 import Secret from './components/secret'
 import { decode, DefaultDecoded, DefaultEncoded } from './components/util'
 
+// TODO
+// can probably do a small state machine of actions + state with useReducer
+// since we would have isSecret set state etc.
 export default function App() {
+  // const text = crypto.randomBytes(200)
   const [decoded, setDecoded] = useState(DefaultDecoded)
   const [encoded, setEncoded] = useState(DefaultEncoded)
   // const [secret, setSecret] = useState()
@@ -24,10 +28,10 @@ export default function App() {
     [prefersDarkMode]
   )
 
-  const onEncodedChange: IEncodedProps['onChange'] = useCallback((value) => {
+  const onEncodedChange: IEncodedProps['onChange'] = useCallback(async (value) => {
     setEncoded(value)
-    const decoded = decode(value, 'tmp') || DefaultDecoded
-    setDecoded(decoded)
+    const decoded = await decode(value)
+    setDecoded(decoded || DefaultDecoded)
   }, [])
 
   const onDecodedChange: IDecodedProps['onChange'] = useCallback((fullPayload) => {

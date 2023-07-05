@@ -1,4 +1,6 @@
-import { IDecoded } from './decoded'
+import { JWTPayload, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
+
+export type IDecoded = JWTPayload
 
 export const DefaultDecoded: IDecoded = {
   header: { alg: 'HS256' },
@@ -12,12 +14,22 @@ export const DefaultEncoded = ''
 
 export const JsonStringSpace = 4 as const
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function decode(_token: string, _secret: string): IDecoded | null {
+export async function decode(token: string): Promise<IDecoded | null> {
   try {
-    // TODO
-    return DefaultDecoded
-  } catch (e) {
+    const payload = decodeJwt(token)
+    const header = decodeProtectedHeader(token)
+    return { payload, header }
+  } catch {
     return null
+  }
+}
+
+export async function isVerified(token: string, secret: string): Promise<boolean> {
+  try {
+    const uArrSecret = new TextEncoder().encode(secret)
+    await compactVerify(token, uArrSecret)
+    return true
+  } catch {
+    return false
   }
 }
