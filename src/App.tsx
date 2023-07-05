@@ -28,10 +28,10 @@ export default function App() {
     [prefersDarkMode]
   )
 
-  const onEncodedChange: IEncodedProps['onChange'] = useCallback((value) => {
+  const onEncodedChange: IEncodedProps['onChange'] = useCallback(async (value) => {
     setEncoded(value)
-    const decoded = decode(value, 'tmp') || DefaultDecoded
-    setDecoded(decoded)
+    const decoded = await decode(value)
+    setDecoded(decoded || DefaultDecoded)
   }, [])
 
   const onDecodedChange: IDecodedProps['onChange'] = useCallback((fullPayload) => {

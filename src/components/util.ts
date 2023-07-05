@@ -1,6 +1,6 @@
-import { Jwt, verify } from 'jsonwebtoken'
+import { JWTPayload, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
 
-export type IDecoded = Pick<Jwt, 'header' | 'payload'>
+export type IDecoded = JWTPayload
 
 export const DefaultDecoded: IDecoded = {
   header: { alg: 'HS256' },
@@ -14,12 +14,22 @@ export const DefaultEncoded = ''
 
 export const JsonStringSpace = 4 as const
 
-export function decode(token: string, secret: string): IDecoded | null {
-  // TODO - try https://github.com/panva/jose
+export async function decode(token: string): Promise<IDecoded | null> {
   try {
-    return verify(token, secret, { algorithms: ['HS256'], complete: true })
-  } catch (e) {
-    console.log('🚀 XXXXXX ~ file: util.ts:21 ~ decode ~ e:', e)
+    const payload = decodeJwt(token)
+    const header = decodeProtectedHeader(token)
+    return { payload, header }
+  } catch {
     return null
+  }
+}
+
+export async function isVerified(token: string, secret: string): Promise<boolean> {
+  try {
+    const uArrSecret = new TextEncoder().encode(secret)
+    await compactVerify(token, uArrSecret)
+    return true
+  } catch {
+    return false
   }
 }
