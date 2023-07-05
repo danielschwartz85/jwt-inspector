@@ -15,10 +15,11 @@ export const DefaultEncoded = ''
 export const JsonStringSpace = 4 as const
 
 export function decode(token: string, secret: string): IDecoded | null {
+  // TODO - try https://github.com/panva/jose
   try {
     return verify(token, secret, { algorithms: ['HS256'], complete: true })
   } catch (e) {
-    // console.log('🚀 XXXXXX ~ file: util.ts:21 ~ decode ~ e:', e)
+    console.log('🚀 XXXXXX ~ file: util.ts:21 ~ decode ~ e:', e)
     return null
   }
 }
