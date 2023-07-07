@@ -1,18 +1,16 @@
 import { Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import { IDecoded, JsonStringSpace } from './util'
 
 export interface IDecodedProps {
-  fullPayload: IDecoded
-  onChange: (fullPayload: IDecoded) => void
+  payload: string
+  header: string
+  onPayloadChange: (payload: string) => void
+  onHeaderChange: (header: string) => void
 }
 
 export default function JwtInput(props: IDecodedProps) {
-  const { fullPayload } = props
-  const payload = JSON.stringify(fullPayload.payload, null, JsonStringSpace)
-  const header = JSON.stringify(fullPayload.header, null, JsonStringSpace)
-
+  const { payload, header, onHeaderChange, onPayloadChange } = props
   return (
     <>
       <StyledHeader variant="h4">{'Decoded'}</StyledHeader>
@@ -25,6 +23,7 @@ export default function JwtInput(props: IDecodedProps) {
             rows={4}
             fullWidth={true}
             value={header}
+            onChange={(e) => onHeaderChange(e.target.value)}
           />
           <TextField
             spellCheck={false}
@@ -33,6 +32,7 @@ export default function JwtInput(props: IDecodedProps) {
             rows={8}
             fullWidth={true}
             value={payload}
+            onChange={(e) => onPayloadChange(e.target.value)}
           />
         </Stack>
       </StyledCard>

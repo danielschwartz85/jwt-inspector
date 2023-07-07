@@ -5,7 +5,10 @@ import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import { Save } from '@mui/icons-material'
 
-function NewSecret(props: AutocompleteRenderInputParams) {
+type INewSecretProps = AutocompleteRenderInputParams & { value: string }
+
+function NewSecret(props: INewSecretProps) {
+  const { value, InputProps } = props
   const handleClickShowPassword = () => alert('saved!')
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,7 +19,7 @@ function NewSecret(props: AutocompleteRenderInputParams) {
     <TextField
       {...props}
       InputProps={{
-        ...props.InputProps,
+        ...InputProps,
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
@@ -31,11 +34,18 @@ function NewSecret(props: AutocompleteRenderInputParams) {
         ),
       }}
       label="YOUR-SECRET-HERE"
+      value={value}
     />
   )
 }
 
-export default function Secret() {
+export interface ISecretProps {
+  value?: string
+  onChange: (secret: string) => void
+}
+
+export default function Secret(props: ISecretProps) {
+  const { value } = props
   return (
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
@@ -50,7 +60,11 @@ export default function Secret() {
           }
           disableClearable
           renderInput={(params) =>
-            <TextField label="YOUR-SECRET-HERE" {...params} /> || <NewSecret {...params} />
+            value ? (
+              <NewSecret value={value} {...params} />
+            ) : (
+              <TextField label="YOUR-SECRET-HERE" {...params} />
+            )
           }
           sx={{ width: '50%' }}
         />
