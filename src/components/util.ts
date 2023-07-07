@@ -1,30 +1,20 @@
-import { JWTPayload, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
+import { JWTPayload, ProtectedHeaderParameters, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
 
-export type IDecoded = JWTPayload
-
-export const DefaultDecoded: IDecoded = {
-  header: { alg: 'HS256' },
-  payload: {
-    name: 'John Doe',
-    iat: 1516239022,
-  },
-}
-
-export const DefaultEncoded = ''
+export type IDecoded = { payload: JWTPayload; header: ProtectedHeaderParameters }
 
 export const JsonStringSpace = 4 as const
 
-export async function decode(token: string): Promise<IDecoded | null> {
+export async function decode(token: string): Promise<IDecoded | undefined> {
   try {
     const payload = decodeJwt(token)
     const header = decodeProtectedHeader(token)
     return { payload, header }
   } catch {
-    return null
+    return undefined
   }
 }
 
-export async function isVerified(token: string, secret: string): Promise<boolean> {
+export async function isVerified(token: string, secret?: string): Promise<boolean> {
   try {
     const uArrSecret = new TextEncoder().encode(secret)
     await compactVerify(token, uArrSecret)
@@ -32,4 +22,8 @@ export async function isVerified(token: string, secret: string): Promise<boolean
   } catch {
     return false
   }
+}
+
+export function jsonPrettyStr(obj: Record<string, unknown>): string {
+  return JSON.stringify(obj, null, JsonStringSpace)
 }

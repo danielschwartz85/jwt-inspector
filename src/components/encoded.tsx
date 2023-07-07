@@ -2,8 +2,8 @@ import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
 
 export interface IEncodedProps {
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange: (encoded: string) => void
 }
 
 export default function Encoded(props: IEncodedProps) {
