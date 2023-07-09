@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useCallback, useReducer } from 'react'
-import Encoded, { EEncodedState, IEncodedProps } from './components/encoded'
+import Encoded, { IEncodedProps } from './components/encoded'
 import Decoded, { IDecodedProps } from './components/decoded'
 import Secret, { ISecretProps } from './components/secret'
 import { decode, isVerified as verify } from './components/util'
@@ -19,11 +19,11 @@ export default function App() {
   const onEncodedChange: IEncodedProps['onChange'] = useCallback(
     async (encoded: string) => {
       if (!encoded) {
-        dispatch({ type: 'encodedChange', isValid: false, isVerified: false, encoded })
+        dispatch({ type: 'encodedChange', isVerified: false, encoded })
       }
       const decoded = await decode(encoded as string)
       const isVerified = await verify(encoded as string, state.secret)
-      dispatch({ type: 'encodedChange', isValid: !!decoded, isVerified, encoded, decoded })
+      dispatch({ type: 'encodedChange', isVerified, encoded, decoded })
     },
     [state.secret]
   )
@@ -50,13 +50,6 @@ export default function App() {
     [state.encoded]
   )
 
-  const encodedState =
-    !state.encoded || state.isVerified
-      ? EEncodedState.Verified
-      : !state.isValid
-      ? EEncodedState.Invalid
-      : EEncodedState.Unverified
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -73,7 +66,7 @@ export default function App() {
       >
         <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
-            <Encoded value={state.encoded} state={encodedState} onChange={onEncodedChange} />
+            <Encoded value={state.encoded} onChange={onEncodedChange} />
           </Grid>
           <Grid item md={8} xs={12}>
             <Decoded
