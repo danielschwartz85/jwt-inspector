@@ -8,6 +8,7 @@ import Decoded, { IDecodedProps } from './components/decoded'
 import Secret, { ISecretProps } from './components/secret'
 import { decode, IDecoded, jsonPrettyStr, isVerified as verify } from './components/util'
 import { JWTPayload, ProtectedHeaderParameters } from 'jose'
+import { orange } from '@mui/material/colors'
 
 interface IState {
   encoded: string
@@ -78,6 +79,12 @@ export default function App() {
       createTheme({
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
+          primary: {
+            main: orange[500],
+          },
+          text: {
+            primary: orange[500],
+          },
         },
       }),
     [prefersDarkMode]
@@ -131,7 +138,7 @@ export default function App() {
           color: 'text.primary',
         }}
       >
-        <Grid container sx={{ px: 8, py: 4 }} spacing={2}>
+        <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
             <Encoded value={state.encoded} onChange={onEncodedChange} />
           </Grid>
