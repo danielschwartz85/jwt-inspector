@@ -9,6 +9,15 @@ export interface IDecodedProps {
   onHeaderChange: (header: string) => void
 }
 
+export function isValid(str: string): boolean {
+  try {
+    JSON.parse(str)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export default function JwtInput(props: IDecodedProps) {
   const { payload, header, onHeaderChange, onPayloadChange } = props
   return (
@@ -23,6 +32,7 @@ export default function JwtInput(props: IDecodedProps) {
             rows={4}
             fullWidth={true}
             value={header}
+            error={!isValid(header)}
             onChange={(e) => onHeaderChange(e.target.value)}
           />
           <TextField
@@ -32,6 +42,7 @@ export default function JwtInput(props: IDecodedProps) {
             rows={8}
             fullWidth={true}
             value={payload}
+            error={!isValid(payload)}
             onChange={(e) => onPayloadChange(e.target.value)}
           />
         </Stack>

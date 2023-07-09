@@ -1,20 +1,17 @@
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
 
-export enum EEncodedState {
-  'Verified' = 'Verified',
-  'Unverified' = 'Unverified',
-  'Invalid' = 'Invalid',
-}
-
 export interface IEncodedProps {
   value?: string
-  state: EEncodedState
   onChange: (encoded: string) => void
 }
 
+export function isValid(encoded: string): boolean {
+  return /^[^.]+\.[^.]+\.[^.]+$/.test(encoded)
+}
+
 export default function Encoded(props: IEncodedProps) {
-  const { value, state, onChange } = props
+  const { value, onChange } = props
 
   return (
     <>
@@ -27,7 +24,7 @@ export default function Encoded(props: IEncodedProps) {
           fullWidth={true}
           spellCheck={false}
           value={value}
-          error={state !== EEncodedState.Verified}
+          error={!!value && !isValid(value)}
           onChange={(e) => onChange(e.target.value)}
         />
       </StyledCard>
