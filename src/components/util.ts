@@ -1,6 +1,5 @@
-import { JWTPayload, ProtectedHeaderParameters, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
-
-export type IDecoded = { payload: JWTPayload; header: ProtectedHeaderParameters }
+import { compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
+import { IDecoded } from '../state'
 
 export const JsonStringSpace = 4 as const
 

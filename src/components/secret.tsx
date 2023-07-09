@@ -1,8 +1,9 @@
-import { StyledCard, StyledHeader, StyledTextField } from './common'
+import { StyledCard, StyledHeader } from './common'
 import Autocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import { Save } from '@mui/icons-material'
+import TextField from '@mui/material/TextField'
 
 type INewSecretProps = AutocompleteRenderInputParams & { value: string }
 
@@ -15,7 +16,7 @@ function NewSecret(props: INewSecretProps) {
   }
 
   return (
-    <StyledTextField
+    <TextField
       {...props}
       InputProps={{
         ...InputProps,
@@ -26,6 +27,7 @@ function NewSecret(props: INewSecretProps) {
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
               edge="end"
+              sx={{ mr: 1 }}
             >
               <Save />
             </IconButton>
@@ -44,7 +46,7 @@ export interface ISecretProps {
 }
 
 export default function Secret(props: ISecretProps) {
-  const { value } = props
+  const { value, onChange } = props
   return (
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
@@ -62,10 +64,11 @@ export default function Secret(props: ISecretProps) {
             value ? (
               <NewSecret value={value} {...params} />
             ) : (
-              <StyledTextField label="YOUR-SECRET-HERE" {...params} />
+              <TextField label="YOUR-SECRET-HERE" {...params} />
             )
           }
           sx={{ width: '50%' }}
+          onInputChange={(_e, value) => onChange(value)}
         />
       </StyledCard>
     </>

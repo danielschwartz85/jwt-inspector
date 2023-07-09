@@ -3,87 +3,18 @@ import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useCallback, useReducer } from 'react'
-import Encoded, { IEncodedProps } from './components/encoded'
+import Encoded, { EEncodedState, IEncodedProps } from './components/encoded'
 import Decoded, { IDecodedProps } from './components/decoded'
 import Secret, { ISecretProps } from './components/secret'
-import { decode, IDecoded, jsonPrettyStr, isVerified as verify } from './components/util'
-import { JWTPayload, ProtectedHeaderParameters } from 'jose'
+import { decode, isVerified as verify } from './components/util'
 import { DarkTheme, LightTheme } from './theme'
-
-interface IState {
-  encoded: string
-  header: string
-  payload: string
-  secret: string
-  isVerified: boolean
-}
-
-// Send only action args and their side affects (jwt async changes that are unrelated to state).
-type TAction =
-  | { type: 'encodedChange'; isValid: boolean; isVerified: boolean; encoded: string; decoded?: IDecoded }
-  | { type: 'headerChange'; header: string; encoded?: string }
-  | { type: 'payloadChange'; payload: string; encoded?: string }
-  | { type: 'secretChange'; isVerified: boolean; secret: string; encoded?: string }
-
-const DefaultState = {
-  encoded: '',
-  header: jsonPrettyStr({ alg: 'HS256' }),
-  payload: jsonPrettyStr({
-    name: 'John Doe',
-    iat: 1516239022,
-  }),
-  secret: '',
-  isVerified: false,
-  isValid: false,
-}
-
-function reducer(state: IState, action: TAction): IState {
-  switch (action.type) {
-    case 'encodedChange':
-      if (!action.isValid) {
-        return {
-          ...state,
-          isVerified: false,
-          encoded: action.encoded,
-          payload: DefaultState.payload,
-          header: DefaultState.header,
-        }
-      }
-      return {
-        ...state,
-        isVerified: action.isVerified,
-        encoded: action.encoded,
-        payload: jsonPrettyStr(action.decoded?.payload as JWTPayload),
-        header: jsonPrettyStr(action.decoded?.header as ProtectedHeaderParameters),
-      }
-    case 'headerChange':
-      return { ...state, header: action.header, encoded: action.encoded || DefaultState.encoded }
-    case 'payloadChange':
-      return { ...state, payload: action.payload, encoded: action.encoded || DefaultState.encoded }
-    case 'secretChange':
-      return {
-        ...state,
-        isVerified: action.isVerified,
-        secret: action.secret,
-        encoded: action.encoded || DefaultState.encoded,
-      }
-  }
-}
+import { DefaultState, reducer } from './state'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, DefaultState)
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-          ...(prefersDarkMode ? DarkTheme : LightTheme),
-        },
-      }),
-    [prefersDarkMode]
-  )
+  const theme = React.useMemo(() => createTheme(prefersDarkMode ? DarkTheme : LightTheme), [prefersDarkMode])
 
   const onEncodedChange: IEncodedProps['onChange'] = useCallback(
     async (encoded: string) => {
@@ -112,12 +43,19 @@ export default function App() {
       if (!secret) {
         dispatch({ type: 'secretChange', isVerified: false, secret })
       }
-      const isVerified = await verify(state.encoded as string, state.secret)
+      const isVerified = await verify(state.encoded as string, secret)
       const encoded = 'TODO encode'
       dispatch({ type: 'secretChange', isVerified, secret, encoded })
     },
-    [state.encoded, state.secret]
+    [state.encoded]
   )
+
+  const encodedState =
+    !state.encoded || state.isVerified
+      ? EEncodedState.Verified
+      : !state.isValid
+      ? EEncodedState.Invalid
+      : EEncodedState.Unverified
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,7 +73,7 @@ export default function App() {
       >
         <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
-            <Encoded value={state.encoded} onChange={onEncodedChange} />
+            <Encoded value={state.encoded} state={encodedState} onChange={onEncodedChange} />
           </Grid>
           <Grid item md={8} xs={12}>
             <Decoded
