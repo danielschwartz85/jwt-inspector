@@ -8,7 +8,7 @@ import Decoded, { IDecodedProps } from './components/decoded'
 import Secret, { ISecretProps } from './components/secret'
 import { decode, IDecoded, jsonPrettyStr, isVerified as verify } from './components/util'
 import { JWTPayload, ProtectedHeaderParameters } from 'jose'
-import { orange } from '@mui/material/colors'
+import { DarkTheme, LightTheme } from './theme'
 
 interface IState {
   encoded: string
@@ -79,12 +79,7 @@ export default function App() {
       createTheme({
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
-          primary: {
-            main: orange[500],
-          },
-          text: {
-            primary: orange[500],
-          },
+          ...(prefersDarkMode ? DarkTheme : LightTheme),
         },
       }),
     [prefersDarkMode]
