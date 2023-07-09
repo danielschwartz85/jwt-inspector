@@ -1,5 +1,4 @@
-import TextField from '@mui/material/TextField'
-import { StyledCard, StyledHeader } from './common'
+import { StyledCard, StyledHeader, StyledTextField } from './common'
 import Autocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
@@ -16,7 +15,7 @@ function NewSecret(props: INewSecretProps) {
   }
 
   return (
-    <TextField
+    <StyledTextField
       {...props}
       InputProps={{
         ...InputProps,
@@ -63,7 +62,7 @@ export default function Secret(props: ISecretProps) {
             value ? (
               <NewSecret value={value} {...params} />
             ) : (
-              <TextField label="YOUR-SECRET-HERE" {...params} />
+              <StyledTextField label="YOUR-SECRET-HERE" {...params} />
             )
           }
           sx={{ width: '50%' }}
