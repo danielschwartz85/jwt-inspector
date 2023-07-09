@@ -6,8 +6,9 @@ export const StyledHeader = styled(Typography)(({ theme }) => ({
 }))
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  '&.Mui-focused': { color: theme.palette.primary.main },
+  '& label, & label.Mui-focused': {
+    color: theme.palette.primary.main,
+  },
 }))
 
 export function StyledCard({ children }: { children?: React.ReactElement }) {
