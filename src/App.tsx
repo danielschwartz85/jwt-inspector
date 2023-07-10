@@ -54,11 +54,10 @@ export default function App() {
   const onSecretChange: ISecretProps['onChange'] = useCallback(
     async (secret: string) => {
       if (!secret) {
-        dispatch({ type: 'secretChange', isVerified: false, secret })
+        dispatch({ type: 'secretChange', secret })
       }
-      const isVerified = await verify(state.encoded as string, secret)
       const encoded = await encode(state.payload, state.header, secret)
-      dispatch({ type: 'secretChange', isVerified, secret, encoded })
+      dispatch({ type: 'secretChange', secret, encoded })
     },
     [encode, state.encoded, state.header, state.payload]
   )

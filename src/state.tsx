@@ -16,7 +16,7 @@ export type TAction =
   | { type: 'encodedChange'; isVerified: boolean; encoded: string; decoded?: IDecoded }
   | { type: 'headerChange'; header: string; encoded?: string }
   | { type: 'payloadChange'; payload: string; encoded?: string }
-  | { type: 'secretChange'; isVerified: boolean; secret: string; encoded?: string }
+  | { type: 'secretChange'; secret: string; encoded?: string }
 
 export const DefaultState = {
   encoded: '',
