@@ -27,21 +27,21 @@ export default function JwtInput(props: IDecodedProps) {
         <Stack spacing={1}>
           <TextField
             spellCheck={false}
-            id="outlined-multiline-static"
+            id="outlined-multiline-static-header"
             multiline
             rows={4}
             fullWidth={true}
-            value={header}
+            defaultValue={header}
             error={!isValid(header)}
             onChange={(e) => onHeaderChange(e.target.value)}
           />
           <TextField
             spellCheck={false}
-            id="outlined-multiline-static"
+            id="outlined-multiline-static-payload"
             multiline
             rows={8}
             fullWidth={true}
-            value={payload}
+            defaultValue={payload}
             error={!isValid(payload)}
             onChange={(e) => onPayloadChange(e.target.value)}
           />

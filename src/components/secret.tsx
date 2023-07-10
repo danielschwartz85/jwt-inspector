@@ -5,9 +5,9 @@ import IconButton from '@mui/material/IconButton'
 import { Save } from '@mui/icons-material'
 import TextField from '@mui/material/TextField'
 
-type INewSecretProps = AutocompleteRenderInputParams & { value: string }
+type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
-function NewSecret(props: INewSecretProps) {
+function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
   const handleClickShowPassword = () => alert('saved!')
 
@@ -22,19 +22,21 @@ function NewSecret(props: INewSecretProps) {
         ...InputProps,
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              edge="end"
-              sx={{ mr: 1 }}
-            >
-              <Save />
-            </IconButton>
+            {value && (
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+                sx={{ mr: 1 }}
+              >
+                <Save />
+              </IconButton>
+            )}
           </InputAdornment>
         ),
       }}
-      label="YOUR-SECRET-HERE"
+      label={value ? undefined : 'YOUR SECRET HERE'}
       value={value}
     />
   )
@@ -60,13 +62,7 @@ export default function Secret(props: ISecretProps) {
             ]
           }
           disableClearable
-          renderInput={(params) =>
-            value ? (
-              <NewSecret value={value} {...params} />
-            ) : (
-              <TextField label="YOUR-SECRET-HERE" {...params} />
-            )
-          }
+          renderInput={(params) => <TextWithSave value={value} {...params} />}
           sx={{ width: '50%' }}
           onInputChange={(_e, value) => onChange(value)}
         />

@@ -16,7 +16,7 @@ export type TAction =
   | { type: 'encodedChange'; isVerified: boolean; encoded: string; decoded?: IDecoded }
   | { type: 'headerChange'; header: string; encoded?: string }
   | { type: 'payloadChange'; payload: string; encoded?: string }
-  | { type: 'secretChange'; isVerified: boolean; secret: string; encoded?: string }
+  | { type: 'secretChange'; secret: string; encoded?: string }
 
 export const DefaultState = {
   encoded: '',
@@ -47,13 +47,23 @@ export function reducer(state: IState, action: TAction): IState {
       }
     }
     case 'headerChange':
-      return { ...state, header: action.header, encoded: action.encoded || DefaultState.encoded }
+      return {
+        ...state,
+        header: action.header,
+        encoded: action.encoded || DefaultState.encoded,
+        isVerified: !!action.encoded,
+      }
     case 'payloadChange':
-      return { ...state, payload: action.payload, encoded: action.encoded || DefaultState.encoded }
+      return {
+        ...state,
+        payload: action.payload,
+        encoded: action.encoded || DefaultState.encoded,
+        isVerified: !!action.encoded,
+      }
     case 'secretChange':
       return {
         ...state,
-        isVerified: action.isVerified,
+        isVerified: !!action.encoded,
         secret: action.secret,
         encoded: action.encoded || DefaultState.encoded,
       }

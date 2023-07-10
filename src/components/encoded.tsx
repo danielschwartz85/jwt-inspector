@@ -23,7 +23,7 @@ export default function Encoded(props: IEncodedProps) {
           rows={10}
           fullWidth={true}
           spellCheck={false}
-          value={value}
+          defaultValue={value}
           error={!!value && !isValid(value)}
           onChange={(e) => onChange(e.target.value)}
         />
