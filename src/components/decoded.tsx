@@ -51,7 +51,8 @@ export default function JwtInput(props: IDecodedProps) {
             spellCheck={false}
             id="header"
             multiline
-            rows={4}
+            minRows={4}
+            maxRows={8}
             fullWidth={true}
             defaultValue={focusedOn === 'header' ? header : undefined}
             value={focusedOn !== 'header' ? header : undefined}
@@ -64,7 +65,8 @@ export default function JwtInput(props: IDecodedProps) {
             spellCheck={false}
             id="payload"
             multiline
-            rows={8}
+            minRows={8}
+            maxRows={12}
             fullWidth={true}
             defaultValue={focusedOn === 'payload' ? payload : undefined}
             value={focusedOn !== 'payload' ? payload : undefined}
