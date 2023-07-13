@@ -6,7 +6,7 @@ export interface IEncodedProps {
   onChange: (encoded: string) => void
 }
 
-export function isValid(encoded: string): boolean {
+function isValid(encoded: string): boolean {
   return /^[^.]+\.[^.]+\.[^.]+$/.test(encoded)
 }
 
