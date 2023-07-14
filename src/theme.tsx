@@ -26,6 +26,6 @@ export const DarkTheme: ThemeOptions = {
 
 export const LightTheme: ThemeOptions = {
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 }

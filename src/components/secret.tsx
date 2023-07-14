@@ -9,9 +9,9 @@ type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
 function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
-  const handleClickShowPassword = () => alert('saved!')
+  const handleClickSave = () => alert('saved!')
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownSave = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
@@ -24,11 +24,11 @@ function TextWithSave(props: INewSecretProps) {
           <InputAdornment position="end">
             {value && (
               <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
+                aria-label="save secret"
+                onClick={handleClickSave}
+                onMouseDown={handleMouseDownSave}
                 edge="end"
-                sx={{ mr: 1 }}
+                sx={{ mr: -1 }}
               >
                 <Save />
               </IconButton>
