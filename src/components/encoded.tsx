@@ -1,8 +1,6 @@
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
-import { ContentCopy } from '@mui/icons-material'
+import InputCopy from './inputCopy'
 
 export interface IEncodedProps {
   value?: string
@@ -15,16 +13,6 @@ function isValid(encoded: string): boolean {
 
 export default function Encoded(props: IEncodedProps) {
   const { value, onChange } = props
-
-  const handleClickCopy = () => {
-    if (!value) return
-    navigator.clipboard.writeText(value)
-  }
-
-  const handleMouseDownCopy = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
-
   return (
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
@@ -38,23 +26,8 @@ export default function Encoded(props: IEncodedProps) {
           value={value}
           error={!!value && !isValid(value)}
           onChange={(e) => onChange(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                {value && (
-                  <IconButton
-                    aria-label="copy jwt"
-                    onClick={handleClickCopy}
-                    onMouseDown={handleMouseDownCopy}
-                    edge="end"
-                    sx={{ mr: -1, ml: -2, mb: -25 }}
-                  >
-                    <ContentCopy />
-                  </IconButton>
-                )}
-              </InputAdornment>
-            ),
-          }}
+          // We can toggle InputCopy on hover but then need to fix text resize jump.
+          InputProps={{ endAdornment: <InputCopy value={value} /> }}
         />
       </StyledCard>
     </>
