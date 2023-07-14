@@ -7,11 +7,11 @@ import { useState } from 'react'
 
 export interface IInputCopyProps {
   value?: string
-  visible: boolean
+  visible?: boolean
 }
 
 export default function InputCopy(props: IInputCopyProps) {
-  const { value, visible } = props
+  const { value, visible = true } = props
   const [openTooltip, setTooltipOpen] = useState(false)
 
   const handleClickCopy = () => {
