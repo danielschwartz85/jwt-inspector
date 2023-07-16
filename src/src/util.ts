@@ -1,5 +1,5 @@
 import { CompactSign, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
-import { IDecoded } from '../state'
+import { IDecoded } from './state'
 
 export const JsonStringSpace = 4 as const
 

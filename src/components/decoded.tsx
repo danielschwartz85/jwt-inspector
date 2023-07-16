@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import { jsonPrettyStr, safeJsonParse } from './util'
+import { jsonPrettyStr, safeJsonParse } from '../src/util'
 import { useState } from 'react'
 
 export interface IDecodedProps {

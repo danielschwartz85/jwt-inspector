@@ -3,20 +3,21 @@ import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React, { useReducer } from 'react'
-import Encoded, { IEncodedProps } from './components/encoded'
-import Decoded, { IDecodedProps } from './components/decoded'
-import Secret, { ISecretProps } from './components/secret'
-import { decode, encode as sign, safeJsonParse, isVerified as verify } from './components/util'
-import { DarkTheme, LightTheme } from './theme'
-import { DefaultState, reducer } from './state'
+import Encoded, { IEncodedProps } from './encoded'
+import Decoded, { IDecodedProps } from './decoded'
+import Secret, { ISecretProps } from './secret'
+import { DarkTheme, LightTheme } from '../src/theme'
+import { decode, encode as sign, safeJsonParse, isVerified as verify } from '../src/util'
+import { DefaultState, reducer } from '../src/state'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, DefaultState)
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const theme = React.useMemo(() => createTheme(prefersDarkMode ? DarkTheme : LightTheme), [prefersDarkMode])
 
-  const encode = async (payload: string, header: string, secret?: string) => {
+  const encode = async (payload: string, header: string, secret?: string): Promise<string | undefined> => {
     const fullPayload = { payload: safeJsonParse(payload), header: safeJsonParse(header) }
+    if (!fullPayload.payload || !fullPayload.header) return
     return await sign(fullPayload, secret || state.secret)
   }
 
