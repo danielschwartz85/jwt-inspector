@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -62,30 +62,33 @@ export default function App() {
           color: 'text.primary',
         }}
       >
-        <Grid container sx={{ px: 4, ml: -2, py: 4 }} spacing={2}>
-          <Grid item md={4} xs={12}>
-            <Encoded value={state.encoded} onChange={onEncodedChange} />
-          </Grid>
-          <Grid item md={8} xs={12}>
-            <Decoded
-              payload={state.payload}
-              header={state.header}
-              onHeaderChange={onHeaderChange}
-              onPayloadChange={onPayloadChange}
-            />
-          </Grid>
-          <Grid
-            item
-            container
-            md={12}
-            xs={12}
-            direction={'column'}
-            justifyContent={'flex-end'}
-            sx={{ minHeight: 'calc(100vh - 520px)' }}
-          >
-            <Grid item>
-              <Secret value={state.secret} onChange={onSecretChange} />
+        <Grid
+          item
+          container
+          direction={'column'}
+          rowSpacing={2}
+          minHeight={'100%'}
+          justifyContent={'space-between'}
+          sx={{ px: 4, py: 4 }}
+        >
+          <Grid container direction={'row'} spacing={2}>
+            <Grid item md={4} xs={12}>
+              <Encoded value={state.encoded} onChange={onEncodedChange} />
             </Grid>
+            <Grid item md={8} xs={12}>
+              <Decoded
+                payload={state.payload}
+                header={state.header}
+                onHeaderChange={onHeaderChange}
+                onPayloadChange={onPayloadChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Secret value={state.secret} onChange={onSecretChange} />
+            <Typography variant={'caption'} sx={{ display: 'block', mt: 2 }}>
+              Daniel Schwartz Inc 🚀 Copyright © 2023, All Rights Are All Right!
+            </Typography>
           </Grid>
         </Grid>
       </Box>
