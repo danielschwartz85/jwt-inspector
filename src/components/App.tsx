@@ -62,7 +62,7 @@ export default function App() {
           color: 'text.primary',
         }}
       >
-        <Grid container sx={{ px: 4, py: 4 }} spacing={2}>
+        <Grid container sx={{ px: 4, ml: -2, py: 4 }} spacing={2}>
           <Grid item md={4} xs={12}>
             <Encoded value={state.encoded} onChange={onEncodedChange} />
           </Grid>
@@ -74,8 +74,18 @@ export default function App() {
               onPayloadChange={onPayloadChange}
             />
           </Grid>
-          <Grid item md={12} xs={12}>
-            <Secret value={state.secret} onChange={onSecretChange} />
+          <Grid
+            item
+            container
+            md={12}
+            xs={12}
+            direction={'column'}
+            justifyContent={'flex-end'}
+            sx={{ minHeight: 'calc(100vh - 520px)' }}
+          >
+            <Grid item>
+              <Secret value={state.secret} onChange={onSecretChange} />
+            </Grid>
           </Grid>
         </Grid>
       </Box>

@@ -30,38 +30,43 @@ export default function InputCopy(props: IInputCopyProps) {
 
   const handleTooltipOpen = () => {
     setTooltipOpen(true)
-    setTimeout(() => setTooltipOpen(false), 600)
+    setTimeout(() => setTooltipOpen(false), 400)
   }
 
   return (
-    <InputAdornment position="end">
-      {visible && value && (
-        <ClickAwayListener onClickAway={handleTooltipClose}>
-          <div>
-            <Tooltip
-              PopperProps={{
-                disablePortal: true,
+    <InputAdornment position="end" sx={{ visibility: visible && value ? undefined : 'hidden' }}>
+      <ClickAwayListener onClickAway={handleTooltipClose}>
+        <div>
+          <Tooltip
+            PopperProps={{
+              disablePortal: true,
+            }}
+            onClose={handleTooltipClose}
+            open={openTooltip}
+            disableFocusListener
+            disableHoverListener
+            disableTouchListener
+            title="Copied ✓"
+          >
+            <IconButton
+              aria-label="copy input"
+              onClick={handleClickCopy}
+              onMouseDown={handleMouseDownCopy}
+              edge="end"
+              sx={{
+                mr: -1,
+                ml: -1,
+                mt: -25,
+                '.MuiTouchRipple-child': {
+                  backgroundColor: 'primary.main',
+                },
               }}
-              onClose={handleTooltipClose}
-              open={openTooltip}
-              disableFocusListener
-              disableHoverListener
-              disableTouchListener
-              title="Copied ✓"
             >
-              <IconButton
-                aria-label="copy input"
-                onClick={handleClickCopy}
-                onMouseDown={handleMouseDownCopy}
-                edge="end"
-                sx={{ mr: -1, ml: -1, mt: -25 }}
-              >
-                <ContentCopy />
-              </IconButton>
-            </Tooltip>
-          </div>
-        </ClickAwayListener>
-      )}
+              <ContentCopy />
+            </IconButton>
+          </Tooltip>
+        </div>
+      </ClickAwayListener>
     </InputAdornment>
   )
 }

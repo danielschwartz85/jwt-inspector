@@ -1,6 +1,7 @@
 import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
 import InputCopy from './inputCopy'
+import { useMemo, useState } from 'react'
 
 export interface IEncodedProps {
   value?: string
@@ -13,6 +14,9 @@ function isValid(encoded: string): boolean {
 
 export default function Encoded(props: IEncodedProps) {
   const { value, onChange } = props
+  const [isHovered, setIsHovered] = useState(false)
+  const isError = useMemo(() => !!value && !isValid(value), [value])
+
   return (
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
@@ -24,10 +28,11 @@ export default function Encoded(props: IEncodedProps) {
           fullWidth={true}
           spellCheck={false}
           value={value}
-          error={!!value && !isValid(value)}
+          error={isError}
           onChange={(e) => onChange(e.target.value)}
-          // We can toggle InputCopy on hover but then need to fix text resize jump.
-          InputProps={{ endAdornment: <InputCopy value={value} /> }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          InputProps={{ endAdornment: <InputCopy value={value} visible={!isError && isHovered} /> }}
         />
       </StyledCard>
     </>
