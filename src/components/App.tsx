@@ -86,7 +86,7 @@ export default function App() {
           </Grid>
           <Grid item>
             <Secret value={state.secret} onChange={onSecretChange} />
-            <Typography variant={'caption'} sx={{ display: 'block', mt: 2 }}>
+            <Typography variant={'caption'} sx={{ display: 'block', mt: 4 }}>
               Daniel Schwartz Inc 🚀 Copyright © 2023, All Rights Are All Right!
             </Typography>
           </Grid>
