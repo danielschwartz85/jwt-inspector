@@ -1,5 +1,5 @@
 import { JWTPayload, ProtectedHeaderParameters } from 'jose'
-import { jsonPrettyStr } from './components/util'
+import { jsonPrettyStr } from './util'
 
 export interface IState {
   encoded: string
