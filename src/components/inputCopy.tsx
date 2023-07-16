@@ -30,7 +30,7 @@ export default function InputCopy(props: IInputCopyProps) {
 
   const handleTooltipOpen = () => {
     setTooltipOpen(true)
-    setTimeout(() => setTooltipOpen(false), 400)
+    setTimeout(() => setTooltipOpen(false), 350)
   }
 
   return (
