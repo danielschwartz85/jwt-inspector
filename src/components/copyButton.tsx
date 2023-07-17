@@ -62,6 +62,7 @@ export default function CopyButton(props: ICopyButtonProps) {
               onMouseDown={handleMouseDownCopy}
               edge="end"
               sx={{
+                // TODO - fix theme color effective
                 '.MuiTouchRipple-child': {
                   backgroundColor: 'primary.main',
                 },
