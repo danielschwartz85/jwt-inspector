@@ -1,8 +1,7 @@
 import { Stack } from '@mui/material'
-import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
 import { jsonPrettyStr, safeJsonParse } from '../src/util'
-import { useState } from 'react'
+import TextFieldCopy from './textFieldCopy'
 
 export interface IDecodedProps {
   payload: string
@@ -22,10 +21,6 @@ export function isValid(str: string): boolean {
 
 export default function JwtInput(props: IDecodedProps) {
   const { payload, header, onHeaderChange, onPayloadChange } = props
-  // If we use "value" in the TextField then we loose undo/redo and have a cursor bug.
-  // if we use "DefaultValue" we can't control the TextField (can't prettify json), so
-  // we keep a state for edit state.
-  const [focusedOn, setFocusedOn] = useState<'payload' | 'header'>()
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     const obj = safeJsonParse(e.target.value)
@@ -39,7 +34,6 @@ export default function JwtInput(props: IDecodedProps) {
     if (e.target.id === 'payload') {
       onPayloadChange(pretty)
     }
-    setFocusedOn(undefined)
   }
 
   return (
@@ -47,33 +41,23 @@ export default function JwtInput(props: IDecodedProps) {
       <StyledHeader variant="h4">{'Decoded'}</StyledHeader>
       <StyledCard>
         <Stack spacing={1}>
-          <TextField
-            spellCheck={false}
+          <TextFieldCopy
             id="header"
-            multiline
             minRows={4}
             maxRows={8}
-            fullWidth={true}
-            defaultValue={focusedOn === 'header' ? header : undefined}
-            value={focusedOn !== 'header' ? header : undefined}
+            value={header}
             error={!isValid(header)}
-            onChange={(e) => onHeaderChange(e.target.value)}
+            onChange={onHeaderChange}
             onBlur={onBlur}
-            onFocus={() => setFocusedOn('header')}
           />
-          <TextField
-            spellCheck={false}
+          <TextFieldCopy
             id="payload"
-            multiline
             minRows={8}
             maxRows={12}
-            fullWidth={true}
-            defaultValue={focusedOn === 'payload' ? payload : undefined}
-            value={focusedOn !== 'payload' ? payload : undefined}
+            value={payload}
             error={!isValid(payload)}
-            onChange={(e) => onPayloadChange(e.target.value)}
+            onChange={onPayloadChange}
             onBlur={onBlur}
-            onFocus={() => setFocusedOn('payload')}
           />
         </Stack>
       </StyledCard>

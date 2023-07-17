@@ -1,7 +1,6 @@
-import TextField from '@mui/material/TextField'
 import { StyledCard, StyledHeader } from './common'
-import InputCopy from './inputCopy'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import TextFieldCopy from './textFieldCopy'
 
 export interface IEncodedProps {
   value?: string
@@ -14,26 +13,12 @@ function isValid(encoded: string): boolean {
 
 export default function Encoded(props: IEncodedProps) {
   const { value, onChange } = props
-  const [isHovered, setIsHovered] = useState(false)
-  const isError = useMemo(() => !!value && !isValid(value), [value])
-
+  const error = useMemo(() => !!value && !isValid(value), [value])
   return (
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
       <StyledCard>
-        <TextField
-          placeholder="Paste JWT.."
-          multiline
-          rows={10}
-          fullWidth={true}
-          spellCheck={false}
-          value={value}
-          error={isError}
-          onChange={(e) => onChange(e.target.value)}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          InputProps={{ endAdornment: <InputCopy value={value} visible={!isError && isHovered} /> }}
-        />
+        <TextFieldCopy value={value} placeholder="Paste JWT.." rows={10} error={error} onChange={onChange} />
       </StyledCard>
     </>
   )
