@@ -5,18 +5,18 @@ import ClickAwayListener from '@mui/material/ClickAwayListener'
 import Tooltip from '@mui/material/Tooltip'
 import { useState } from 'react'
 
-export interface IInputCopyProps {
-  value?: string
+export interface ICopyButtonProps {
+  value?: unknown
   visible?: boolean
 }
 
-export default function InputCopy(props: IInputCopyProps) {
+export default function CopyButton(props: ICopyButtonProps) {
   const { value, visible = true } = props
   const [openTooltip, setTooltipOpen] = useState(false)
 
   const handleClickCopy = () => {
     if (!value) return
-    navigator.clipboard.writeText(value)
+    navigator.clipboard.writeText(value.toString())
     handleTooltipOpen()
   }
 
@@ -34,7 +34,15 @@ export default function InputCopy(props: IInputCopyProps) {
   }
 
   return (
-    <InputAdornment position="end" sx={{ visibility: visible && value ? undefined : 'hidden' }}>
+    <InputAdornment
+      position="end"
+      sx={(theme) => ({
+        position: 'absolute',
+        top: theme.spacing(4),
+        right: theme.spacing(3),
+        visibility: visible && value ? undefined : 'hidden',
+      })}
+    >
       <ClickAwayListener onClickAway={handleTooltipClose}>
         <div>
           <Tooltip
@@ -53,14 +61,12 @@ export default function InputCopy(props: IInputCopyProps) {
               onClick={handleClickCopy}
               onMouseDown={handleMouseDownCopy}
               edge="end"
-              sx={{
-                mr: -1,
-                ml: -1,
-                mt: -25,
+              sx={(theme) => ({
                 '.MuiTouchRipple-child': {
-                  backgroundColor: 'primary.main',
+                  backgroundColor:
+                    theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.light,
                 },
-              }}
+              })}
             >
               <ContentCopy />
             </IconButton>

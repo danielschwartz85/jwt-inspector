@@ -67,9 +67,8 @@ export default function App() {
           container
           direction={'column'}
           rowSpacing={2}
-          minHeight={'100%'}
           justifyContent={'space-between'}
-          sx={{ px: 4, py: 4 }}
+          sx={{ px: 4, py: 4, minHeight: '100%' }}
         >
           <Grid container direction={'row'} spacing={2}>
             <Grid item md={4} xs={12}>
