@@ -4,6 +4,7 @@ import { ContentCopy } from '@mui/icons-material'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import Tooltip from '@mui/material/Tooltip'
 import { useState } from 'react'
+import Typography from '@mui/material/Typography'
 
 export interface ICopyButtonProps {
   value?: unknown
@@ -54,7 +55,7 @@ export default function CopyButton(props: ICopyButtonProps) {
             disableFocusListener
             disableHoverListener
             disableTouchListener
-            title="Copied ✓"
+            title={<Typography fontSize={'subtitle2.fontSize'}>{'Copied ✓'}</Typography>}
           >
             <IconButton
               aria-label="copy input"
