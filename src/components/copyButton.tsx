@@ -61,12 +61,11 @@ export default function CopyButton(props: ICopyButtonProps) {
               onClick={handleClickCopy}
               onMouseDown={handleMouseDownCopy}
               edge="end"
-              sx={(theme) => ({
+              sx={{
                 '.MuiTouchRipple-child': {
-                  backgroundColor:
-                    theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.light,
+                  backgroundColor: 'primary.main',
                 },
-              })}
+              }}
             >
               <ContentCopy />
             </IconButton>
