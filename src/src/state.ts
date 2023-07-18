@@ -50,14 +50,14 @@ export function reducer(state: IState, action: TAction): IState {
       return {
         ...state,
         header: action.header,
-        encoded: action.encoded || DefaultState.encoded,
+        encoded: action.encoded || state.encoded || DefaultState.encoded,
         isVerified: !!action.encoded,
       }
     case 'payloadChange':
       return {
         ...state,
         payload: action.payload,
-        encoded: action.encoded || DefaultState.encoded,
+        encoded: action.encoded || state.encoded || DefaultState.encoded,
         isVerified: !!action.encoded,
       }
     case 'secretChange':
@@ -65,7 +65,7 @@ export function reducer(state: IState, action: TAction): IState {
         ...state,
         isVerified: !!action.secret && !!action.encoded,
         secret: action.secret,
-        encoded: action.encoded || DefaultState.encoded,
+        encoded: action.encoded || state.encoded || DefaultState.encoded,
       }
   }
 }
