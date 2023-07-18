@@ -63,7 +63,7 @@ export function reducer(state: IState, action: TAction): IState {
     case 'secretChange':
       return {
         ...state,
-        isVerified: !!action.encoded,
+        isVerified: !!action.secret && !!action.encoded,
         secret: action.secret,
         encoded: action.encoded || DefaultState.encoded,
       }
