@@ -9,7 +9,7 @@ type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
 function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
-  const handleClickSave = () => alert('saved!')
+  const handleClickSave = () => alert('Coming soon..')
 
   const handleMouseDownSave = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()

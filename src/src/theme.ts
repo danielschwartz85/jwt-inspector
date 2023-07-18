@@ -26,6 +26,16 @@ export const DarkTheme: ThemeOptions = {
 
 export const LightTheme: ThemeOptions = {
   palette: {
-    mode: 'light',
+    primary: {
+      main: '#3f51b5',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+    text: { primary: '#3f51b5' },
+    background: {
+      default: '#fafafa',
+      paper: '#FFFFFF',
+    },
   },
 }
