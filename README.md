@@ -3,4 +3,4 @@
 
 💾 With local storage management
 
-🧐 [Check it out](https://danielschwartz85.github.io/jwt-inspector/)
+👉 [Check it out](https://danielschwartz85.github.io/jwt-inspector/)
