@@ -28,10 +28,10 @@ export default function JwtInput(props: IDecodedProps) {
     if (!pretty) {
       return
     }
-    if (e.target.id === 'header') {
+    if (e.target.id === 'header' && pretty !== header) {
       onHeaderChange(pretty)
     }
-    if (e.target.id === 'payload') {
+    if (e.target.id === 'payload' && pretty !== payload) {
       onPayloadChange(pretty)
     }
   }
