@@ -24,7 +24,7 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
       onChange={(e) => onChange(e.target.value)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      // TODO - padding right to the textarea
+      sx={{ '& textarea.MuiInputBase-inputMultiline': { mr: 5 } }}
       InputProps={{ endAdornment: <CopyButton value={value} visible={!error && isHovered} /> }}
     />
   )
