@@ -1,5 +1,9 @@
 import { CompactSign, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
 import { IDecoded } from './state'
+import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
+import React, { useEffect, useState } from 'react'
+import createTheme, { Theme } from '@mui/material/styles/createTheme'
+import { DarkTheme, LightTheme } from './theme'
 
 export const JsonStringSpace = 4 as const
 
@@ -46,4 +50,26 @@ export function safeJsonParse(obj: string): Record<string, unknown> | undefined 
   } catch {
     return undefined
   }
+}
+
+export function getLocalStorageTheme(): 'light' | 'dark' | undefined {
+  return <'light' | 'dark' | undefined>localStorage.getItem('themeMode')
+}
+
+export function useUserTheme(): [Theme, boolean, () => void] {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const localStorageMode = getLocalStorageTheme()
+  const userPrefersDark = localStorageMode === 'dark' || prefersDarkMode
+  const [isDarkMode, setIsDarkMode] = useState(userPrefersDark)
+  const theme = React.useMemo(() => createTheme(isDarkMode ? DarkTheme : LightTheme), [isDarkMode])
+
+  useEffect(() => {
+    localStorage.setItem('themeMode', isDarkMode ? 'dark' : 'light')
+  }, [isDarkMode])
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((isDarkMode) => !isDarkMode)
+  }
+
+  return [theme, isDarkMode, toggleDarkMode]
 }
