@@ -1,19 +1,17 @@
 import { Box, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import React, { useReducer } from 'react'
+import { ThemeProvider } from '@mui/material/styles'
+import { useReducer } from 'react'
 import Encoded, { IEncodedProps } from './encoded'
 import Decoded, { IDecodedProps } from './decoded'
 import Secret, { ISecretProps } from './secret'
-import { DarkTheme, LightTheme } from '../src/theme'
-import { decode, encode as sign, safeJsonParse, isVerified as verify } from '../src/util'
+import { decode, encode as sign, safeJsonParse, isVerified as verify, useUserTheme } from '../src/util'
 import { DefaultState, reducer } from '../src/state'
+import { ThemeIcon } from './themeIcon'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, DefaultState)
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const theme = React.useMemo(() => createTheme(prefersDarkMode ? DarkTheme : LightTheme), [prefersDarkMode])
+  const [theme, isDarkMode, toggleDarkMode] = useUserTheme()
 
   const encode = async (payload: string, header: string, secret?: string): Promise<string | undefined> => {
     const fullPayload = { payload: safeJsonParse(payload), header: safeJsonParse(header) }
@@ -70,6 +68,7 @@ export default function App() {
           justifyContent={'space-between'}
           sx={{ px: 4, pb: 3, pt: 6, minHeight: '100%' }}
         >
+          <ThemeIcon isDarkMode={isDarkMode} onClick={toggleDarkMode} />
           <Grid container direction={'row'} spacing={2}>
             <Grid item md={4} xs={12}>
               <Encoded value={state.encoded} onChange={onEncodedChange} />
