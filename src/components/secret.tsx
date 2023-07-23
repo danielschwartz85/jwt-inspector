@@ -12,7 +12,18 @@ type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
 function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
-  const handleClickSave = () => alert('coming soon..')
+
+  const handleClickSave = () => {
+    alert('coming soon..')
+    // show dialog [date, label(required), value], [save, cancel]
+    // save to local storage
+    // reset option values with new label + secret
+    // call onChange with new secret
+    // if secret value is saved (in LS) then don't show secret show label
+    // if secret value is saved (in LS) then don't show save button
+    // can show [X] button instead (with are you sure optionally)
+    // later add [X] button to options so we can delete the secret
+  }
 
   const handleMouseDownSave = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
