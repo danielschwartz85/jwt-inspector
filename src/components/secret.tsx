@@ -2,19 +2,24 @@ import { StyledCard, StyledHeader } from './common'
 import Autocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
-import { CheckCircleOutline, ErrorOutline, Save } from '@mui/icons-material'
+import Save from '@mui/icons-material/Save'
+import ErrorOutline from '@mui/icons-material/ErrorOutline'
+import CheckCircleOutline from '@mui/icons-material/CheckCircleOutline'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import SecretDialog from './secretDialog'
+import { useState } from 'react'
 
 type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
 function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleClickSave = () => {
-    alert('coming soon..')
+    setIsOpen(true)
     // show dialog [date, label(required), value], [save, cancel]
     // save to local storage
     // reset option values with new label + secret
@@ -29,30 +34,37 @@ function TextWithSave(props: INewSecretProps) {
     event.preventDefault()
   }
 
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
   return (
-    <TextField
-      {...props}
-      InputProps={{
-        ...InputProps,
-        endAdornment: (
-          <InputAdornment position="end">
-            {value && (
-              <IconButton
-                aria-label="save secret"
-                onClick={handleClickSave}
-                onMouseDown={handleMouseDownSave}
-                edge="end"
-                sx={{ mr: -1 }}
-              >
-                <Save />
-              </IconButton>
-            )}
-          </InputAdornment>
-        ),
-      }}
-      label={value ? undefined : 'YOUR SECRET HERE'}
-      value={value}
-    />
+    <>
+      <SecretDialog isOpen={isOpen} handleClose={handleClose} handleSave={handleClose} />
+      <TextField
+        {...props}
+        InputProps={{
+          ...InputProps,
+          endAdornment: (
+            <InputAdornment position="end">
+              {value && (
+                <IconButton
+                  aria-label="save secret"
+                  onClick={handleClickSave}
+                  onMouseDown={handleMouseDownSave}
+                  edge="end"
+                  sx={{ mr: -1 }}
+                >
+                  <Save />
+                </IconButton>
+              )}
+            </InputAdornment>
+          ),
+        }}
+        label={value ? undefined : 'YOUR SECRET HERE'}
+        value={value}
+      />
+    </>
   )
 }
 
