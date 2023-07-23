@@ -67,7 +67,7 @@ export default function SecretDialog(props: SecretDialogProps) {
       <DialogTitle>Save secret</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          The secret will be saved in local storage and deleted after the expiration date.
+          Your secret will be saved in local storage and deleted after the expiration date.
         </DialogContentText>
         <DialogContentText>Note: saved secret are not visible</DialogContentText>
         <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-end', mt: 1 }}>

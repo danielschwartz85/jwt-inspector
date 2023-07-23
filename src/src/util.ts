@@ -59,7 +59,7 @@ export function getLocalStorageTheme(): 'light' | 'dark' | undefined {
 export function useUserTheme(): [Theme, boolean, () => void] {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const localStorageMode = getLocalStorageTheme()
-  const userPrefersDark = localStorageMode === 'dark' || prefersDarkMode
+  const userPrefersDark = (!localStorageMode && prefersDarkMode) || localStorageMode === 'dark'
   const [isDarkMode, setIsDarkMode] = useState(userPrefersDark)
   const theme = React.useMemo(() => createTheme(isDarkMode ? DarkTheme : LightTheme), [isDarkMode])
 
