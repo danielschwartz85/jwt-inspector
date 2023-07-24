@@ -70,7 +70,15 @@ export default function SecretDialog(props: SecretDialogProps) {
           Your secret will be saved in local storage and deleted after the expiration date.
         </DialogContentText>
         <DialogContentText>Note: saved secrets are not visible</DialogContentText>
-        <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-end', mt: 1 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'flex-end',
+            mt: 1,
+            flexWrap: 'wrap',
+          }}
+        >
           <TextField
             helperText=" "
             required
