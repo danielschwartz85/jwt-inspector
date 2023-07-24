@@ -9,17 +9,18 @@ import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import SecretDialog from './secretDialog'
+import SecretDialog, { ISecretDialogProps } from './secretDialog'
 import { useState } from 'react'
+import { SecretManager } from '../src/util'
 
 type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
 
 function TextWithSave(props: INewSecretProps) {
   const { value, InputProps } = props
-  const [isOpen, setIsOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const handleClickSave = () => {
-    setIsOpen(true)
+  const handleClickSaveIcon = () => {
+    setIsDialogOpen(true)
     // show dialog [date, label(required), value], [save, cancel]
     // save to local storage
     // reset option values with new label + secret
@@ -34,13 +35,24 @@ function TextWithSave(props: INewSecretProps) {
     event.preventDefault()
   }
 
-  const handleClose = () => {
-    setIsOpen(false)
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+  }
+
+  const handleSaveDialog: ISecretDialogProps['handleSave'] = (secret) => {
+    console.log('🚀 XXXXXX ~ file: secret.tsx:43 ~ TextWithSave ~ secret:', secret)
+    SecretManager.saveSecret(secret)
+    setIsDialogOpen(false)
   }
 
   return (
     <>
-      <SecretDialog isOpen={isOpen} handleClose={handleClose} handleSave={handleClose} />
+      <SecretDialog
+        initialValue={value as string}
+        isOpen={isDialogOpen}
+        handleClose={handleCloseDialog}
+        handleSave={handleSaveDialog}
+      />
       <TextField
         {...props}
         InputProps={{
@@ -50,7 +62,7 @@ function TextWithSave(props: INewSecretProps) {
               {value && (
                 <IconButton
                   aria-label="save secret"
-                  onClick={handleClickSave}
+                  onClick={handleClickSaveIcon}
                   onMouseDown={handleMouseDownSave}
                   edge="end"
                   sx={{ mr: -1 }}

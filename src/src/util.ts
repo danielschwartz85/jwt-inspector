@@ -1,5 +1,5 @@
 import { CompactSign, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
-import { IDecoded } from './state'
+import { IDecoded, ISavedSecret } from './state'
 import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 import createTheme, { Theme } from '@mui/material/styles/createTheme'
@@ -72,4 +72,32 @@ export function useUserTheme(): [Theme, boolean, () => void] {
   }
 
   return [theme, isDarkMode, toggleDarkMode]
+}
+
+export const SecretManager = {
+  getSecret: (label: string): string | undefined => {
+    const secrets = SecretManager._secrets()
+    if (!secrets[label]) return
+    const exp = new Date(secrets[label].expiration)
+    if (exp < new Date()) {
+      SecretManager.deleteSecret(label)
+      return
+    }
+    return secrets[label].value
+  },
+  saveSecret: (secret: ISavedSecret): void => {
+    const secrets = SecretManager._secrets()
+    secrets[secret.label] = secret
+    localStorage.setItem('secrets', JSON.stringify(secrets))
+  },
+  deleteSecret: (label: string): void => {
+    const secrets = SecretManager._secrets()
+    if (!secrets[label]) return
+    delete secrets[label]
+    localStorage.setItem('secrets', JSON.stringify(secrets))
+  },
+  _secrets: (): Record<string, ISavedSecret> => {
+    const savedSecrets = localStorage.getItem('secrets')
+    return savedSecrets ? JSON.parse(savedSecrets) : {}
+  },
 }
