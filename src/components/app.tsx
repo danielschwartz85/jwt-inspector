@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
@@ -6,9 +5,11 @@ import { useReducer } from 'react'
 import Encoded, { IEncodedProps } from './encoded'
 import Decoded, { IDecodedProps } from './decoded'
 import Secret, { ISecretProps } from './secret'
-import { decode, encode as sign, safeJsonParse, isVerified as verify, useUserTheme } from '../src/util'
+import { decode, encode as sign, safeJsonParse, isVerified as verify } from '../src/util'
 import { DefaultState, reducer } from '../src/state'
 import { ThemeIcon } from './themeIcon'
+import { useUserTheme } from './common'
+import Box from '@mui/material/Box'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, DefaultState)
