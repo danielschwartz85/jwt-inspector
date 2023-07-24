@@ -1,6 +1,12 @@
 import { JWTPayload, ProtectedHeaderParameters } from 'jose'
 import { jsonPrettyStr } from './util'
 
+export interface ISavedSecret {
+  expiration: Date
+  label: string
+  value: string
+}
+
 export interface IState {
   encoded: string
   header: string

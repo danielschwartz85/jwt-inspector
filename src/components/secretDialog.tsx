@@ -11,11 +11,13 @@ import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
+import { ISavedSecret } from '../src/state'
 
-export interface SecretDialogProps {
+export interface ISecretDialogProps {
   isOpen: boolean
+  initialValue: string
   handleClose: () => void
-  handleSave: () => void
+  handleSave: (secret: ISavedSecret) => void
 }
 
 enum EExpiration {
@@ -25,6 +27,7 @@ enum EExpiration {
   Month = 'Month',
   Year = 'Year',
 }
+
 const DefaultFormState = {
   label: '',
   value: '',
@@ -32,13 +35,26 @@ const DefaultFormState = {
   isError: false,
 }
 
-export default function SecretDialog(props: SecretDialogProps) {
-  const { isOpen, handleClose, handleSave } = props
-  const [state, setState] = useState(DefaultFormState)
+function getExpirationDate(expiration: EExpiration): Date {
+  const now = new Date()
+  const getDate = {
+    [EExpiration.Hour]: () => now.setHours(now.getHours() + 1),
+    [EExpiration.Day]: () => now.setDate(now.getDate() + 1),
+    [EExpiration.Week]: () => now.setDate(now.getDate() + 7),
+    [EExpiration.Month]: () => now.setMonth(now.getMonth() + 1),
+    [EExpiration.Year]: () => now.setMonth(now.getMonth() + 12),
+  }
+  getDate[expiration]()
+  return now
+}
+
+export default function SecretDialog(props: ISecretDialogProps) {
+  const { isOpen, initialValue, handleClose, handleSave } = props
+  const [state, setState] = useState({ ...DefaultFormState, value: initialValue })
 
   useEffect(() => {
-    setState(DefaultFormState)
-  }, [isOpen])
+    setState({ ...DefaultFormState, value: initialValue })
+  }, [isOpen, initialValue])
 
   const onLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((state) => ({ ...state, label: e.target.value }))
@@ -57,9 +73,9 @@ export default function SecretDialog(props: SecretDialogProps) {
       setState((state) => ({ ...state, isError: true }))
       return
     }
-    // TODO: convert expiration and call handleSave with label + expiration + value
-    alert('not supported yet, coming soon..')
-    handleSave()
+    const expiration = getExpirationDate(state.expiration)
+    const { label, value } = state
+    handleSave({ expiration, label, value })
   }
 
   return (
