@@ -128,6 +128,11 @@ export default function Secret(props: ISecretProps) {
             renderInput={(params) => <TextWithSave onSave={onSecretSave} value={value} {...params} />}
             sx={{ width: '50%' }}
             PopperComponent={CustomPopper}
+            ListboxProps={{
+              style: {
+                maxHeight: '500px',
+              },
+            }}
             onInputChange={(_e, value) => onChange(secretsMap[value]?.value || value)}
           />
           {isVerified ? (
