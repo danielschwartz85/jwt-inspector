@@ -52,7 +52,6 @@ export default function SecretDialog(props: ISecretDialogProps) {
   const { isOpen, initialValue, handleClose, handleSave } = props
   const [state, setState] = useState({ ...DefaultFormState, value: initialValue })
 
-  // TODO - ctrl initialValue from parent?
   useEffect(() => {
     setState({ ...DefaultFormState, value: initialValue })
   }, [isOpen, initialValue])
