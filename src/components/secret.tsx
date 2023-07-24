@@ -40,7 +40,6 @@ function TextWithSave(props: INewSecretProps) {
   }
 
   const handleSaveDialog: ISecretDialogProps['handleSave'] = (secret) => {
-    console.log('🚀 XXXXXX ~ file: secret.tsx:43 ~ TextWithSave ~ secret:', secret)
     SecretManager.saveSecret(secret)
     setIsDialogOpen(false)
   }
