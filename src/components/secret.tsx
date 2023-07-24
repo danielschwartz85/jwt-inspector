@@ -103,6 +103,11 @@ export default function Secret(props: ISecretProps) {
     onChange(secret.value)
   }
 
+  const savedSecret = useMemo(
+    () => Object.values(secrets).find(({ value: v }) => v === value),
+    [value, secrets]
+  )
+
   return (
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
@@ -119,7 +124,7 @@ export default function Secret(props: ISecretProps) {
             freeSolo
             options={secrets}
             getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
-            value={value}
+            value={savedSecret?.label || value}
             renderInput={(params) => <TextWithSave onSave={onSecretSave} value={value} {...params} />}
             sx={{ width: '50%' }}
             PopperComponent={CustomPopper}
