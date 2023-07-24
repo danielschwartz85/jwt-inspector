@@ -103,16 +103,6 @@ export default function Secret(props: ISecretProps) {
     onChange(secret.value)
   }
 
-  const isSaved = useMemo(
-    () =>
-      Object.values(secrets)
-        .map(({ value }) => value)
-        .includes(value as string),
-    [value, secrets]
-  )
-
-  // TODO - options should be label and value is secret
-
   return (
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
@@ -127,19 +117,13 @@ export default function Secret(props: ISecretProps) {
         >
           <Autocomplete
             freeSolo
-            options={secrets.map(({ value, label }) => ({ label: value, id: label }))}
+            options={secrets}
+            getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
             value={value}
-            renderInput={(params) => (
-              <TextWithSave
-                type={isSaved ? 'password' : 'text'}
-                onSave={onSecretSave}
-                value={value}
-                {...params}
-              />
-            )}
+            renderInput={(params) => <TextWithSave onSave={onSecretSave} value={value} {...params} />}
             sx={{ width: '50%' }}
             PopperComponent={CustomPopper}
-            onInputChange={(_e, value) => onChange(value)}
+            onInputChange={(_e, value) => onChange(secretsMap[value]?.value || value)}
           />
           {isVerified ? (
             <SignatureTooltip value="Verified">
