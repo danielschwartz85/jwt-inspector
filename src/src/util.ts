@@ -1,9 +1,5 @@
 import { CompactSign, compactVerify, decodeJwt, decodeProtectedHeader } from 'jose'
 import { IDecoded, ISavedSecret } from './state'
-import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
-import React, { useEffect, useState } from 'react'
-import createTheme, { Theme } from '@mui/material/styles/createTheme'
-import { DarkTheme, LightTheme } from './theme'
 
 export const JsonStringSpace = 4 as const
 
@@ -52,31 +48,9 @@ export function safeJsonParse(obj: string): Record<string, unknown> | undefined 
   }
 }
 
-export function getLocalStorageTheme(): 'light' | 'dark' | undefined {
-  return <'light' | 'dark' | undefined>localStorage.getItem('themeMode')
-}
-
-export function useUserTheme(): [Theme, boolean, () => void] {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const localStorageMode = getLocalStorageTheme()
-  const userPrefersDark = (!localStorageMode && prefersDarkMode) || localStorageMode === 'dark'
-  const [isDarkMode, setIsDarkMode] = useState(userPrefersDark)
-  const theme = React.useMemo(() => createTheme(isDarkMode ? DarkTheme : LightTheme), [isDarkMode])
-
-  useEffect(() => {
-    localStorage.setItem('themeMode', isDarkMode ? 'dark' : 'light')
-  }, [isDarkMode])
-
-  const toggleDarkMode = () => {
-    setIsDarkMode((isDarkMode) => !isDarkMode)
-  }
-
-  return [theme, isDarkMode, toggleDarkMode]
-}
-
 export const SecretManager = {
   getSecret: (label: string): string | undefined => {
-    const secrets = SecretManager._secrets()
+    const secrets = SecretManager.getSecrets()
     if (!secrets[label]) return
     const exp = new Date(secrets[label].expiration)
     if (exp < new Date()) {
@@ -86,17 +60,20 @@ export const SecretManager = {
     return secrets[label].value
   },
   saveSecret: (secret: ISavedSecret): void => {
-    const secrets = SecretManager._secrets()
+    const secrets = SecretManager.getSecrets()
     secrets[secret.label] = secret
     localStorage.setItem('secrets', JSON.stringify(secrets))
   },
+  saveSecrets: (secrets: Record<string, ISavedSecret>): void => {
+    localStorage.setItem('secrets', JSON.stringify(secrets))
+  },
   deleteSecret: (label: string): void => {
-    const secrets = SecretManager._secrets()
+    const secrets = SecretManager.getSecrets()
     if (!secrets[label]) return
     delete secrets[label]
     localStorage.setItem('secrets', JSON.stringify(secrets))
   },
-  _secrets: (): Record<string, ISavedSecret> => {
+  getSecrets: (): Record<string, ISavedSecret> => {
     const savedSecrets = localStorage.getItem('secrets')
     return savedSecrets ? JSON.parse(savedSecrets) : {}
   },

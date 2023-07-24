@@ -1,34 +1,30 @@
-import { StyledCard, StyledHeader } from './common'
-import Autocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
+import { StyledCard, StyledHeader, useSecrets } from './common'
+import Autocomplete from '@mui/material/Autocomplete'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import Save from '@mui/icons-material/Save'
 import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import CheckCircleOutline from '@mui/icons-material/CheckCircleOutline'
-import TextField from '@mui/material/TextField'
+import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import SecretDialog, { ISecretDialogProps } from './secretDialog'
-import { useState } from 'react'
-import { SecretManager } from '../src/util'
+import { useMemo, useState } from 'react'
+import { ISavedSecret } from '../src/state'
+import Popper, { PopperProps } from '@mui/material/Popper'
 
-type INewSecretProps = AutocompleteRenderInputParams & { value?: string }
+type ITextWithSaveProps = TextFieldProps & {
+  value?: string
+  onSave: (secret: ISavedSecret) => void
+}
 
-function TextWithSave(props: INewSecretProps) {
-  const { value, InputProps } = props
+function TextWithSave(props: ITextWithSaveProps) {
+  const { value, InputProps, onSave, ...rest } = props
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const handleClickSaveIcon = () => {
     setIsDialogOpen(true)
-    // show dialog [date, label(required), value], [save, cancel]
-    // save to local storage
-    // reset option values with new label + secret
-    // call onChange with new secret
-    // if secret value is saved (in LS) then don't show secret show label
-    // if secret value is saved (in LS) then don't show save button
-    // can show [X] button instead (with are you sure optionally)
-    // later add [X] button to options so we can delete the secret
   }
 
   const handleMouseDownSave = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,7 +36,7 @@ function TextWithSave(props: INewSecretProps) {
   }
 
   const handleSaveDialog: ISecretDialogProps['handleSave'] = (secret) => {
-    SecretManager.saveSecret(secret)
+    onSave(secret)
     setIsDialogOpen(false)
   }
 
@@ -53,7 +49,7 @@ function TextWithSave(props: INewSecretProps) {
         handleSave={handleSaveDialog}
       />
       <TextField
-        {...props}
+        {...rest}
         InputProps={{
           ...InputProps,
           endAdornment: (
@@ -79,6 +75,9 @@ function TextWithSave(props: INewSecretProps) {
   )
 }
 
+function CustomPopper(props: PopperProps) {
+  return <Popper {...props} placement="top-start" />
+}
 export interface ISecretProps {
   value?: string
   isVerified: boolean
@@ -96,6 +95,24 @@ export function SignatureTooltip(props: { children: JSX.Element; value: string }
 
 export default function Secret(props: ISecretProps) {
   const { value, onChange, isVerified } = props
+  const [secretsMap, addSecret] = useSecrets()
+  const secrets = Object.values(secretsMap)
+
+  const onSecretSave: ITextWithSaveProps['onSave'] = (secret) => {
+    addSecret(secret)
+    onChange(secret.value)
+  }
+
+  const isSaved = useMemo(
+    () =>
+      Object.values(secrets)
+        .map(({ value }) => value)
+        .includes(value as string),
+    [value, secrets]
+  )
+
+  // TODO - options should be label and value is secret
+
   return (
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
@@ -110,15 +127,18 @@ export default function Secret(props: ISecretProps) {
         >
           <Autocomplete
             freeSolo
-            options={
-              [
-                // { label: 'cnc', id: '12345' },
-                // { label: 'lala', id: 'lala' },
-              ]
-            }
-            disableClearable
-            renderInput={(params) => <TextWithSave value={value} {...params} />}
+            options={secrets.map(({ value, label }) => ({ label: value, id: label }))}
+            value={value}
+            renderInput={(params) => (
+              <TextWithSave
+                type={isSaved ? 'password' : 'text'}
+                onSave={onSecretSave}
+                value={value}
+                {...params}
+              />
+            )}
             sx={{ width: '50%' }}
+            PopperComponent={CustomPopper}
             onInputChange={(_e, value) => onChange(value)}
           />
           {isVerified ? (
