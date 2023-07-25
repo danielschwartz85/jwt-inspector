@@ -9,9 +9,9 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
-import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
 import { ISavedSecret } from '../src/state'
+import Grid from '@mui/material/Grid'
 
 export interface ISecretDialogProps {
   isOpen: boolean
@@ -85,48 +85,60 @@ export default function SecretDialog(props: ISecretDialogProps) {
         <DialogContentText>
           Your secret will be saved in local storage and deleted after the expiration date.
         </DialogContentText>
-        <DialogContentText>Note: saved secrets are not visible</DialogContentText>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'flex-end',
-            mt: 1,
-            flexWrap: 'wrap',
-          }}
+        <DialogContentText>Note: saved secrets are not visible.</DialogContentText>
+        <Grid
+          item
+          container
+          direction={'row'}
+          alignItems={'flex-end'}
+          justifyContent={'space-between'}
+          sx={{ mt: 2 }}
         >
-          <TextField
-            helperText=" "
-            required
-            value={state.label}
-            onChange={onLabelChange}
-            error={state.isError && !state.label}
-            autoFocus
-            id="label"
-            label="Label"
-            variant="standard"
-          />
-          <TextField
-            helperText=" "
-            required
-            value={state.value}
-            error={state.isError && !state.value}
-            onChange={onValueChange}
-            id="secret"
-            label="Value"
-            variant="standard"
-          />
-          <FormControl>
-            <Select value={state.expiration} variant="standard" onChange={onExpirationChange}>
-              <MenuItem value={EExpiration.Hour}>1 hour</MenuItem>
-              <MenuItem value={EExpiration.Day}>1 day</MenuItem>
-              <MenuItem value={EExpiration.Week}>1 week</MenuItem>
-              <MenuItem value={EExpiration.Month}>1 month</MenuItem>
-              <MenuItem value={EExpiration.Year}>1 year</MenuItem>
-            </Select>
-            <FormHelperText>Keep for</FormHelperText>
-          </FormControl>
-        </Box>
+          <Grid item sm={4.5} xs={12}>
+            <TextField
+              helperText=" "
+              required
+              value={state.label}
+              onChange={onLabelChange}
+              error={state.isError && !state.label}
+              sx={{ width: '100%' }}
+              inputRef={(input) => input && input.focus()}
+              id="label"
+              label="Label"
+              variant="standard"
+            />
+          </Grid>
+          <Grid item sm={4.5} xs={12}>
+            <TextField
+              helperText=" "
+              required
+              value={state.value}
+              error={state.isError && !state.value}
+              onChange={onValueChange}
+              sx={{ width: '100%' }}
+              id="secret"
+              label="Value"
+              variant="standard"
+            />
+          </Grid>
+          <Grid item sm={'auto'} xs={12}>
+            <FormControl>
+              <Select value={state.expiration} variant="standard" onChange={onExpirationChange}>
+                <MenuItem value={EExpiration.Hour}>1 hour</MenuItem>
+                <MenuItem value={EExpiration.Day}>1 day</MenuItem>
+                <MenuItem value={EExpiration.Week}>1 week</MenuItem>
+                <MenuItem value={EExpiration.Month}>1 month</MenuItem>
+                <MenuItem value={EExpiration.Year}>1 year</MenuItem>
+              </Select>
+              <FormHelperText>Delete after</FormHelperText>
+            </FormControl>
+          </Grid>
+        </Grid>
+        {/* // display: 'flex',
+            // justifyContent: 'space-around',
+            // alignItems: 'flex-end',
+            // mt: 1,
+            // flexWrap: 'wrap', */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
