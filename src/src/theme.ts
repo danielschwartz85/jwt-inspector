@@ -27,12 +27,12 @@ export const DarkTheme: ThemeOptions = {
 export const LightTheme: ThemeOptions = {
   palette: {
     primary: {
-      main: '#3f51b5',
+      main: '#371cad',
     },
     secondary: {
-      main: '#f50057',
+      main: '#e752a9',
     },
-    text: { primary: '#3f51b5' },
+    text: { primary: '#371cad' },
     background: {
       default: '#fafafa',
       paper: '#FFFFFF',
