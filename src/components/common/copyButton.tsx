@@ -21,10 +21,6 @@ export default function CopyButton(props: ICopyButtonProps) {
     handleTooltipOpen()
   }
 
-  const handleMouseDownCopy = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
-
   const handleTooltipClose = () => {
     setTooltipOpen(false)
   }
@@ -60,7 +56,6 @@ export default function CopyButton(props: ICopyButtonProps) {
             <IconButton
               aria-label="copy input"
               onClick={handleClickCopy}
-              onMouseDown={handleMouseDownCopy}
               edge="end"
               sx={{
                 '.MuiTouchRipple-child': {

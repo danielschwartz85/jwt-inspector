@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 import { ISavedSecret } from '../../src/state'
 import Grid from '@mui/material/Grid'
 
-export interface ISecretDialogProps {
+export interface ISaveSecretDialog {
   isOpen: boolean
   initialValue: string
   handleClose: () => void
@@ -49,7 +49,7 @@ function getExpirationDate(expiration: EExpiration): Date {
   return now
 }
 
-export default function SecretDialog(props: ISecretDialogProps) {
+export default function SaveSecretDialog(props: ISaveSecretDialog) {
   const { isOpen, initialValue, handleClose, handleSave } = props
   const [state, setState] = useState({ ...DefaultFormState, value: initialValue, isOpened: isOpen })
 

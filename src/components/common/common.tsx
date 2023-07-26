@@ -39,7 +39,11 @@ export function useLocalUserTheme(): [Theme, boolean, () => void] {
   return [theme, isDarkMode, toggleDarkMode]
 }
 
-export function useLocalSecrets(): [Record<string, ISavedSecret>, (secret: ISavedSecret) => void] {
+export function useLocalSecrets(): [
+  Record<string, ISavedSecret>,
+  (secret: ISavedSecret) => void,
+  (secret: ISavedSecret) => void
+] {
   const localStorageSecrets = SecretManager.getSecrets()
   const [secrets, setSecrets] = useState(localStorageSecrets)
 
@@ -51,5 +55,13 @@ export function useLocalSecrets(): [Record<string, ISavedSecret>, (secret: ISave
     setSecrets((secrets) => ({ ...secrets, [secret.label]: secret }))
   }
 
-  return [secrets, addSecret]
+  const remSecret = (secret: ISavedSecret) => {
+    setSecrets((secrets) => {
+      const newSecrets = { ...secrets }
+      delete newSecrets[secret.label]
+      return newSecrets
+    })
+  }
+
+  return [secrets, addSecret, remSecret]
 }

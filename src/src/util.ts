@@ -78,3 +78,7 @@ export const SecretManager = {
     return savedSecrets ? JSON.parse(savedSecrets) : {}
   },
 }
+
+export function ellipsePad(str: string, limit = 50) {
+  return str.length >= limit ? `${str.substring(0, limit - 3)}...` : str
+}
