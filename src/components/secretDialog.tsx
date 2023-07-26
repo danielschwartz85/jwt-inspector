@@ -134,11 +134,6 @@ export default function SecretDialog(props: ISecretDialogProps) {
             </FormControl>
           </Grid>
         </Grid>
-        {/* // display: 'flex',
-            // justifyContent: 'space-around',
-            // alignItems: 'flex-end',
-            // mt: 1,
-            // flexWrap: 'wrap', */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
