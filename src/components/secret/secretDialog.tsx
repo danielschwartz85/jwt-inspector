@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
 import { useEffect, useState } from 'react'
-import { ISavedSecret } from '../src/state'
+import { ISavedSecret } from '../../src/state'
 import Grid from '@mui/material/Grid'
 
 export interface ISecretDialogProps {
@@ -102,7 +102,8 @@ export default function SecretDialog(props: ISecretDialogProps) {
               onChange={onLabelChange}
               error={state.isError && !state.label}
               sx={{ width: '100%' }}
-              inputRef={(input) => input && input.focus()}
+              // TODO - fix don't focus on input changes
+              // inputRef={(input) => input && input.focus()}
               id="label"
               label="Label"
               variant="standard"

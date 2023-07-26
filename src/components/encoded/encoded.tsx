@@ -1,6 +1,6 @@
-import { StyledCard, StyledHeader } from './common'
+import { StyledCard, StyledHeader } from '../common/common'
 import { useMemo } from 'react'
-import TextFieldCopy from './textFieldCopy'
+import TextFieldCopy from '../common/textFieldCopy'
 
 export interface IEncodedProps {
   value?: string
