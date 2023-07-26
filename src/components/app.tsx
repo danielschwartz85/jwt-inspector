@@ -2,18 +2,18 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import { useReducer } from 'react'
-import Encoded, { IEncodedProps } from './encoded'
-import Decoded, { IDecodedProps } from './decoded'
-import Secret, { ISecretProps } from './secret'
+import Encoded, { IEncodedProps } from './encoded/encoded'
+import Decoded, { IDecodedProps } from './decoded/decoded'
+import Secret, { ISecretProps } from './secret/secret'
 import { decode, encode as sign, safeJsonParse, isVerified as verify } from '../src/util'
 import { DefaultState, reducer } from '../src/state'
 import { ThemeIcon } from './themeIcon'
-import { useUserTheme } from './common'
+import { useLocalUserTheme } from './common/common'
 import Box from '@mui/material/Box'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, DefaultState)
-  const [theme, isDarkMode, toggleDarkMode] = useUserTheme()
+  const [theme, isDarkMode, toggleDarkMode] = useLocalUserTheme()
 
   const encode = async (payload: string, header: string, secret?: string): Promise<string | undefined> => {
     const fullPayload = { payload: safeJsonParse(payload), header: safeJsonParse(header) }

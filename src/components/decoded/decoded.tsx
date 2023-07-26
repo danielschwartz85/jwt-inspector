@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
-import { StyledCard, StyledHeader } from './common'
-import { jsonPrettyStr, safeJsonParse } from '../src/util'
-import TextFieldCopy from './textFieldCopy'
+import { StyledCard, StyledHeader } from '../common/common'
+import { jsonPrettyStr, safeJsonParse } from '../../src/util'
+import TextFieldCopy from '../common/textFieldCopy'
 
 export interface IDecodedProps {
   payload: string

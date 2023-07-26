@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
 import { useEffect, useState } from 'react'
-import { ISavedSecret } from '../src/state'
+import { ISavedSecret } from '../../src/state'
 import Grid from '@mui/material/Grid'
 
 export interface ISecretDialogProps {
@@ -33,6 +33,7 @@ const DefaultFormState = {
   value: '',
   expiration: EExpiration.Week,
   isError: false,
+  isOpened: false,
 }
 
 function getExpirationDate(expiration: EExpiration): Date {
@@ -50,27 +51,28 @@ function getExpirationDate(expiration: EExpiration): Date {
 
 export default function SecretDialog(props: ISecretDialogProps) {
   const { isOpen, initialValue, handleClose, handleSave } = props
-  const [state, setState] = useState({ ...DefaultFormState, value: initialValue })
+  const [state, setState] = useState({ ...DefaultFormState, value: initialValue, isOpened: isOpen })
 
   useEffect(() => {
-    setState({ ...DefaultFormState, value: initialValue })
+    // Reset form on dialog open/close
+    setState({ ...DefaultFormState, value: initialValue, isOpened: isOpen })
   }, [isOpen, initialValue])
 
   const onLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((state) => ({ ...state, label: e.target.value }))
+    setState((state) => ({ ...state, label: e.target.value, isOpened: false }))
   }
 
   const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((state) => ({ ...state, value: e.target.value }))
+    setState((state) => ({ ...state, value: e.target.value, isOpened: false }))
   }
 
   const onExpirationChange = (e: SelectChangeEvent<EExpiration>) => {
-    setState((state) => ({ ...state, expiration: e.target.value as EExpiration }))
+    setState((state) => ({ ...state, expiration: e.target.value as EExpiration, isOpened: false }))
   }
 
   const handleSaveClick = () => {
     if (!state.label || !state.value) {
-      setState((state) => ({ ...state, isError: true }))
+      setState((state) => ({ ...state, isError: true, isOpened: false }))
       return
     }
     const expiration = getExpirationDate(state.expiration)
@@ -102,7 +104,7 @@ export default function SecretDialog(props: ISecretDialogProps) {
               onChange={onLabelChange}
               error={state.isError && !state.label}
               sx={{ width: '100%' }}
-              inputRef={(input) => input && input.focus()}
+              inputRef={(input) => state.isOpened && input?.focus()}
               id="label"
               label="Label"
               variant="standard"
@@ -134,11 +136,6 @@ export default function SecretDialog(props: ISecretDialogProps) {
             </FormControl>
           </Grid>
         </Grid>
-        {/* // display: 'flex',
-            // justifyContent: 'space-around',
-            // alignItems: 'flex-end',
-            // mt: 1,
-            // flexWrap: 'wrap', */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

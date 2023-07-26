@@ -1,13 +1,13 @@
 import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 import createTheme, { Theme } from '@mui/material/styles/createTheme'
-import { DarkTheme, LightTheme } from '../src/theme'
+import { DarkTheme, LightTheme } from '../../src/theme'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import styled from '@mui/material/styles/styled'
 import Typography from '@mui/material/Typography'
-import { ISavedSecret } from '../src/state'
-import { SecretManager } from '../src/util'
+import { ISavedSecret } from '../../src/state'
+import { SecretManager } from '../../src/util'
 
 export const StyledHeader = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
@@ -21,7 +21,7 @@ export function StyledCard({ children }: { children?: React.ReactElement }) {
   )
 }
 
-export function useUserTheme(): [Theme, boolean, () => void] {
+export function useLocalUserTheme(): [Theme, boolean, () => void] {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const localStorageMode = localStorage.getItem('themeMode')
   const userPrefersDark = (!localStorageMode && prefersDarkMode) || localStorageMode === 'dark'
@@ -39,7 +39,7 @@ export function useUserTheme(): [Theme, boolean, () => void] {
   return [theme, isDarkMode, toggleDarkMode]
 }
 
-export function useSecrets(): [Record<string, ISavedSecret>, (secret: ISavedSecret) => void] {
+export function useLocalSecrets(): [Record<string, ISavedSecret>, (secret: ISavedSecret) => void] {
   const localStorageSecrets = SecretManager.getSecrets()
   const [secrets, setSecrets] = useState(localStorageSecrets)
 
