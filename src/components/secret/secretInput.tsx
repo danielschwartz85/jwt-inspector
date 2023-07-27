@@ -12,7 +12,6 @@ import Popper, { PopperProps } from '@mui/material/Popper'
 import DeleteForever from '@mui/icons-material/DeleteForever'
 import Box from '@mui/material/Box'
 import { ellipsePad } from '../../src/util'
-import Tooltip from '@mui/material/Tooltip'
 import ConfirmDeleteDialog from './confirmDeleteDialog'
 
 type ITextWithSaveProps = TextFieldProps & {
@@ -61,9 +60,10 @@ function TextWithSave(props: ITextWithSaveProps) {
                   onClick={handleClickSaveIcon}
                   onMouseDown={handleMouseDownSave}
                   edge="end"
-                  sx={{ mr: -1 }}
+                  sx={{ mr: -4 }}
+                  title="Save"
                 >
-                  <Save />
+                  <Save fontSize="small" />
                 </IconButton>
               )}
             </InputAdornment>
@@ -122,11 +122,14 @@ export default function SecretInput(props: ISecretInputProps) {
         renderOption={(props, option) => (
           <li {...props} style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Box sx={{ overflow: 'hidden' }}>{ellipsePad(option.label)}</Box>
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete secret" onClick={() => handleClickDelete(option)} edge="end">
-                <DeleteForever color="secondary" fontSize="small" />
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              aria-label="delete secret"
+              title="Delete"
+              onClick={() => handleClickDelete(option)}
+              edge="end"
+            >
+              <DeleteForever color="secondary" fontSize="small" />
+            </IconButton>
           </li>
         )}
         options={secrets}
