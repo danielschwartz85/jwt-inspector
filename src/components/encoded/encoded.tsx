@@ -18,7 +18,14 @@ export default function Encoded(props: IEncodedProps) {
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
       <StyledCard>
-        <TextFieldCopy value={value} placeholder="Paste JWT.." rows={10} error={error} onChange={onChange} />
+        <TextFieldCopy
+          value={value}
+          placeholder="Paste JWT.."
+          rows={10}
+          error={error}
+          onChange={onChange}
+          ariaLabel="encoded input"
+        />
       </StyledCard>
     </>
   )
