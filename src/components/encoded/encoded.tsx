@@ -1,5 +1,5 @@
 import { StyledCard, StyledHeader } from '../common/common'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import TextFieldCopy from '../common/textFieldCopy'
 
 export interface IEncodedProps {
@@ -14,6 +14,12 @@ function isValid(encoded: string): boolean {
 export default function Encoded(props: IEncodedProps) {
   const { value, onChange } = props
   const error = useMemo(() => !!value && !isValid(value), [value])
+  const [isAppStart, setIsAppStart] = useState(true)
+
+  const onBlur = () => {
+    setIsAppStart(false)
+  }
+
   return (
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
@@ -25,6 +31,8 @@ export default function Encoded(props: IEncodedProps) {
           error={error}
           onChange={onChange}
           ariaLabel="encoded input"
+          inputRef={(input) => isAppStart && input?.focus()}
+          onBlur={onBlur}
         />
       </StyledCard>
     </>
