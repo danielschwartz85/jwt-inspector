@@ -142,7 +142,6 @@ export default function SecretInput(props: ISecretInputProps) {
             <TextWithSave onSave={onSecretSave} value={value} {...params} />
           )
         }
-        sx={{ width: '50%' }}
         PopperComponent={CustomPopper}
         ListboxProps={{
           style: {
