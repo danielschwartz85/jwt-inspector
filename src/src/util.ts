@@ -79,6 +79,6 @@ export const SecretManager = {
   },
 }
 
-export function ellipsePad(str: string, limit = 50) {
+export function ellipsePad(str: string, limit = 70) {
   return str.length >= limit ? `${str.substring(0, limit - 3)}...` : str
 }

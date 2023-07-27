@@ -3,10 +3,10 @@ import { StyledCard, StyledHeader } from '../common/common'
 import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import CheckCircleOutline from '@mui/icons-material/CheckCircleOutline'
 
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import SecretInput from './secretInput'
+import Grid from '@mui/material/Grid'
 
 export interface ISecretProps {
   value?: string
@@ -30,25 +30,22 @@ export default function Secret(props: ISecretProps) {
     <>
       <StyledHeader variant="h5">{'Secret'}</StyledHeader>
       <StyledCard>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <SecretInput value={value} onChange={onChange} />
-          {isVerified ? (
-            <SignatureTooltip value="Verified">
-              <CheckCircleOutline sx={{ pr: 2, fontSize: 30, color: 'success.main' }} />
-            </SignatureTooltip>
-          ) : (
-            <SignatureTooltip value="Invalid">
-              <ErrorOutline sx={{ pr: 2, fontSize: 30, color: 'error.main' }} />
-            </SignatureTooltip>
-          )}
-        </Box>
+        <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <Grid item md={4} xs={6}>
+            <SecretInput value={value} onChange={onChange} />
+          </Grid>
+          <Grid item md={'auto'} xs={'auto'}>
+            {isVerified ? (
+              <SignatureTooltip value="Verified">
+                <CheckCircleOutline sx={{ pr: 2, fontSize: 30, color: 'success.main' }} />
+              </SignatureTooltip>
+            ) : (
+              <SignatureTooltip value="Invalid">
+                <ErrorOutline sx={{ pr: 2, fontSize: 30, color: 'error.main' }} />
+              </SignatureTooltip>
+            )}
+          </Grid>
+        </Grid>
       </StyledCard>
     </>
   )
