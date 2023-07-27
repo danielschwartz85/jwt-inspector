@@ -4,10 +4,11 @@ import { useState } from 'react'
 
 export type ITextFieldCopyProps = Omit<TextFieldProps, 'onChange'> & {
   onChange: (value: string) => void
+  ariaLabel?: string
 }
 
 export default function TextFieldCopy(props: ITextFieldCopyProps) {
-  const { value, error, onChange, ...rest } = props
+  const { value, error, onChange, ariaLabel, ...rest } = props
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -25,7 +26,10 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{ '& textarea.MuiInputBase-inputMultiline': { mr: 5 } }}
-      InputProps={{ endAdornment: <CopyButton value={value} visible={!error && isHovered} /> }}
+      inputProps={ariaLabel ? { 'aria-label': ariaLabel } : undefined}
+      InputProps={{
+        endAdornment: <CopyButton value={value} visible={!error && isHovered} />,
+      }}
     />
   )
 }

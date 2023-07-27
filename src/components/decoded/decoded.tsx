@@ -42,6 +42,7 @@ export default function JwtInput(props: IDecodedProps) {
       <StyledCard>
         <Stack spacing={1}>
           <TextFieldCopy
+            ariaLabel="decoded header input"
             id="header"
             minRows={4}
             maxRows={8}
@@ -51,6 +52,7 @@ export default function JwtInput(props: IDecodedProps) {
             onBlur={onBlur}
           />
           <TextFieldCopy
+            ariaLabel="decoded payload input"
             id="payload"
             minRows={8}
             maxRows={12}
