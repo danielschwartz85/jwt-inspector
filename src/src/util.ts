@@ -29,7 +29,7 @@ export async function encode(decoded: Partial<IDecoded>, secret?: string): Promi
     const toEncode = JSON.stringify(payload)
     const uArrSecret = new TextEncoder().encode(secret)
     return await new CompactSign(new TextEncoder().encode(toEncode))
-      .setProtectedHeader({ alg: 'HS256', ...header })
+      .setProtectedHeader({ ...header, alg: 'HS256' })
       .sign(uArrSecret)
   } catch {
     return undefined

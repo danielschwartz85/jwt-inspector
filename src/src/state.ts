@@ -26,7 +26,7 @@ export type TAction =
 
 export const DefaultState = {
   encoded: '',
-  header: jsonPrettyStr({ alg: 'HS256' }),
+  header: jsonPrettyStr({ alg: 'HS256', typ: 'JWT' }),
   payload: jsonPrettyStr({
     name: 'John Doe',
     iat: 1516239022,
