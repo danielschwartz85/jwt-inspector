@@ -3,10 +3,11 @@ import { StyledCard, StyledHeader } from '../common/common'
 import ErrorOutline from '@mui/icons-material/ErrorOutline'
 import CheckCircleOutline from '@mui/icons-material/CheckCircleOutline'
 
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
 import SecretInput from './secretInput'
 import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import useTheme from '@mui/material/styles/useTheme'
 
 export interface ISecretProps {
   value?: string
@@ -14,17 +15,10 @@ export interface ISecretProps {
   onChange: (secret: string) => void
 }
 
-export function SignatureTooltip(props: { children: JSX.Element; value: string }) {
-  const { value, children } = props
-  return (
-    <Tooltip title={<Typography fontSize={'subtitle2.fontSize'}>{value}</Typography>} placement="left">
-      {children}
-    </Tooltip>
-  )
-}
-
 export default function Secret(props: ISecretProps) {
   const { value, onChange, isVerified } = props
+  const theme = useTheme()
+  const greaterThanMid = useMediaQuery(theme.breakpoints.up('md'))
 
   return (
     <>
@@ -34,15 +28,22 @@ export default function Secret(props: ISecretProps) {
           <Grid item md={4} xs={6}>
             <SecretInput value={value} onChange={onChange} />
           </Grid>
+          <Grid item sx={{ ml: 'auto', px: 1 }}>
+            {isVerified ? (
+              <Typography variant={'h6'} sx={{ color: 'success.main', fontWeight: '400' }}>
+                Verified
+              </Typography>
+            ) : (
+              <Typography variant={'h6'} sx={{ color: 'error.main', fontWeight: '400' }}>
+                Invalid
+              </Typography>
+            )}
+          </Grid>
           <Grid item md={'auto'} xs={'auto'}>
             {isVerified ? (
-              <SignatureTooltip value="Verified">
-                <CheckCircleOutline sx={{ pr: 2, fontSize: 30, color: 'success.main' }} />
-              </SignatureTooltip>
+              <CheckCircleOutline sx={{ pr: greaterThanMid ? 2 : 0, fontSize: 30, color: 'success.main' }} />
             ) : (
-              <SignatureTooltip value="Invalid">
-                <ErrorOutline sx={{ pr: 2, fontSize: 30, color: 'error.main' }} />
-              </SignatureTooltip>
+              <ErrorOutline sx={{ pr: 2, fontSize: 30, color: 'error.main' }} />
             )}
           </Grid>
         </Grid>

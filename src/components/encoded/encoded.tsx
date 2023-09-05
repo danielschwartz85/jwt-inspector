@@ -17,7 +17,7 @@ export default function Encoded(props: IEncodedProps) {
   const [isAppStart, setIsAppStart] = useState(true)
 
   const onBlur = () => {
-    setIsAppStart(false)
+    isAppStart && setIsAppStart(false)
   }
 
   return (

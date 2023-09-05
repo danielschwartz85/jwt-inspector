@@ -23,7 +23,9 @@ export default function App() {
 
   const onEncodedChange: IEncodedProps['onChange'] = async (encoded: string) => {
     if (!encoded) {
-      dispatch({ type: 'encodedChange', isVerified: false, encoded })
+      const freshEncoded = await encode(state.payload, state.header)
+      dispatch({ type: 'encodedChange', isVerified: true, encoded: freshEncoded || '' })
+      return
     }
     const decoded = await decode(encoded as string)
     const isVerified = await verify(encoded as string, state.secret)
