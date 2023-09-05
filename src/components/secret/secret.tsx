@@ -19,6 +19,7 @@ export default function Secret(props: ISecretProps) {
   const { value, onChange, isVerified } = props
   const theme = useTheme()
   const greaterThanMid = useMediaQuery(theme.breakpoints.up('md'))
+  const iconRightMargin = greaterThanMid ? 2 : 0
 
   return (
     <>
@@ -41,9 +42,9 @@ export default function Secret(props: ISecretProps) {
           </Grid>
           <Grid item md={'auto'} xs={'auto'}>
             {isVerified ? (
-              <CheckCircleOutline sx={{ pr: greaterThanMid ? 2 : 0, fontSize: 30, color: 'success.main' }} />
+              <CheckCircleOutline sx={{ pr: iconRightMargin, fontSize: 30, color: 'success.main' }} />
             ) : (
-              <ErrorOutline sx={{ pr: 2, fontSize: 30, color: 'error.main' }} />
+              <ErrorOutline sx={{ pr: iconRightMargin, fontSize: 30, color: 'error.main' }} />
             )}
           </Grid>
         </Grid>
