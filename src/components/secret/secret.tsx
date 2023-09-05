@@ -19,8 +19,8 @@ export default function Secret(props: ISecretProps) {
   const { value, onChange, isVerified } = props
   const theme = useTheme()
   const greaterThanMid = useMediaQuery(theme.breakpoints.up('md'))
-
   const iconRightMargin = greaterThanMid ? 2 : 0
+
   return (
     <>
       <StyledHeader variant="h5">{'Verify Signature'}</StyledHeader>
