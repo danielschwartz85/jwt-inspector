@@ -69,7 +69,7 @@ function TextWithSave(props: ITextWithSaveProps) {
             </InputAdornment>
           ),
         }}
-        label={value ? undefined : 'YOUR SECRET HERE'}
+        // label={value ? undefined : 'YOUR SECRET HERE'}
         value={value}
       />
     </>

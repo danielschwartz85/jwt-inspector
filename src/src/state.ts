@@ -31,7 +31,7 @@ export const DefaultState = {
     name: 'John Doe',
     iat: 1516239022,
   }),
-  secret: '',
+  secret: 'YOUR SECRET HERE',
   isVerified: false,
 }
 
