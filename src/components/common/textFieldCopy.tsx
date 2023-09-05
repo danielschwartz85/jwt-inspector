@@ -9,26 +9,35 @@ export type ITextFieldCopyProps = Omit<TextFieldProps, 'onChange'> & {
 
 export default function TextFieldCopy(props: ITextFieldCopyProps) {
   const { value, error, onChange, ariaLabel, ...rest } = props
-  const [isHovered, setIsHovered] = useState(false)
+  const [isActive, setIsActive] = useState(false)
+
+  const onFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setIsActive(true)
+    rest.onFocus?.(e)
+  }
+  const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setIsActive(false)
+    rest.onBlur?.(e)
+  }
 
   return (
     <TextField
       {...rest}
       // If we use "DefaultValue" we can't control the TextField
       // If we use "value" in the TextField then we loose undo/redo and have a cursor bug.
-      defaultValue={isHovered ? value : undefined}
-      value={!isHovered ? value : undefined}
+      defaultValue={isActive ? value : undefined}
+      value={!isActive ? value : undefined}
       multiline
       error={error}
       fullWidth={true}
       spellCheck={false}
       onChange={(e) => onChange(e.target.value)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onFocus={onFocus}
+      onBlur={onBlur}
       sx={{ '& textarea.MuiInputBase-inputMultiline': { mr: 5 } }}
       inputProps={ariaLabel ? { 'aria-label': ariaLabel } : undefined}
       InputProps={{
-        endAdornment: <CopyButton value={value} visible={!error && isHovered} />,
+        endAdornment: <CopyButton value={value} visible={!error && isActive} />,
       }}
     />
   )

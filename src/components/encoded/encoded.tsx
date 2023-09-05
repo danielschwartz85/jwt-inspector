@@ -25,7 +25,7 @@ export default function Encoded(props: IEncodedProps) {
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
       <StyledCard>
         <TextFieldCopy
-          value={value}
+          value={isAppStart ? '' : value}
           placeholder="Paste JWT.."
           rows={10}
           error={error}

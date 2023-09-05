@@ -28,7 +28,7 @@ export default function Secret(props: ISecretProps) {
 
   return (
     <>
-      <StyledHeader variant="h5">{'Secret'}</StyledHeader>
+      <StyledHeader variant="h5">{'Verify Signature'}</StyledHeader>
       <StyledCard>
         <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <Grid item md={4} xs={6}>
