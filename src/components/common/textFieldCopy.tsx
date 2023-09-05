@@ -10,6 +10,7 @@ export type ITextFieldCopyProps = Omit<TextFieldProps, 'onChange'> & {
 export default function TextFieldCopy(props: ITextFieldCopyProps) {
   const { value, error, onChange, ariaLabel, ...rest } = props
   const [isActive, setIsActive] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   const onFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     setIsActive(true)
@@ -18,6 +19,14 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
   const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     setIsActive(false)
     rest.onBlur?.(e)
+  }
+  const onMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsHovered(true)
+    rest.onMouseEnter?.(e)
+  }
+  const onMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsHovered(false)
+    rest.onMouseEnter?.(e)
   }
 
   return (
@@ -34,10 +43,12 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
       onChange={(e) => onChange(e.target.value)}
       onFocus={onFocus}
       onBlur={onBlur}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       sx={{ '& textarea.MuiInputBase-inputMultiline': { mr: 5 } }}
       inputProps={ariaLabel ? { 'aria-label': ariaLabel } : undefined}
       InputProps={{
-        endAdornment: <CopyButton value={value} visible={!error && isActive} />,
+        endAdornment: <CopyButton value={value} visible={!error && isHovered} />,
       }}
     />
   )
