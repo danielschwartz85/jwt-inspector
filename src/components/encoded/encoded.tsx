@@ -1,4 +1,4 @@
-import { StyledCard, StyledHeader } from '../common/common'
+import { DisableGrammarlyProps, StyledCard, StyledHeader } from '../common/common'
 import { useMemo, useState } from 'react'
 import TextFieldCopy from '../common/textFieldCopy'
 
@@ -33,6 +33,7 @@ export default function Encoded(props: IEncodedProps) {
           ariaLabel="encoded input"
           inputRef={(input) => isAppStart && input?.focus()}
           onBlur={onBlur}
+          inputProps={DisableGrammarlyProps}
         />
       </StyledCard>
     </>
