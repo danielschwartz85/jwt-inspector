@@ -12,6 +12,7 @@ import FormControl from '@mui/material/FormControl'
 import { useEffect, useState } from 'react'
 import { ISavedSecret } from '../../src/state'
 import Grid from '@mui/material/Grid'
+import { DisableGrammarlyProps } from '../common/common'
 
 export interface ISaveSecretDialog {
   isOpen: boolean
@@ -121,6 +122,7 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
               id="secret"
               label="Value"
               variant="standard"
+              inputProps={DisableGrammarlyProps}
             />
           </Grid>
           <Grid item sm={'auto'} xs={12}>

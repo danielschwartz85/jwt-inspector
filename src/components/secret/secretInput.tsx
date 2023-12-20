@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import { ISavedSecret } from '../../src/state'
 import { useMemo } from 'react'
-import { useLocalSecrets } from '../common/common'
+import { DisableGrammarlyProps, useLocalSecrets } from '../common/common'
 import TextField, { TextFieldProps } from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
@@ -50,6 +50,7 @@ function TextWithSave(props: ITextWithSaveProps) {
       />
       <TextField
         {...rest}
+        inputProps={{ ...DisableGrammarlyProps, ...rest.inputProps }}
         InputProps={{
           ...InputProps,
           endAdornment: (
