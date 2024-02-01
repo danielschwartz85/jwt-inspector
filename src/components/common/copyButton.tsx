@@ -13,7 +13,7 @@ export interface ICopyButtonProps {
 
 export default function CopyButton(props: ICopyButtonProps) {
   const { value, visible = true } = props
-  const [openTooltip, setTooltipOpen] = useState(false)
+  const [isTooltipOpen, setTooltipOpen] = useState(false)
 
   const handleClickCopy = () => {
     if (!value) return
@@ -27,7 +27,7 @@ export default function CopyButton(props: ICopyButtonProps) {
 
   const handleTooltipOpen = () => {
     setTooltipOpen(true)
-    setTimeout(() => setTooltipOpen(false), 350)
+    setTimeout(() => setTooltipOpen(false), 1000)
   }
 
   return (
@@ -47,7 +47,7 @@ export default function CopyButton(props: ICopyButtonProps) {
               disablePortal: true,
             }}
             onClose={handleTooltipClose}
-            open={openTooltip}
+            open={isTooltipOpen}
             disableFocusListener
             disableHoverListener
             disableTouchListener
@@ -55,7 +55,7 @@ export default function CopyButton(props: ICopyButtonProps) {
           >
             <IconButton
               aria-label="copy input"
-              onClick={handleClickCopy}
+              onMouseDown={handleClickCopy}
               edge="end"
               sx={{
                 '.MuiTouchRipple-child': {
