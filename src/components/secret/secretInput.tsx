@@ -58,7 +58,7 @@ function TextWithSave(props: ITextWithSaveProps) {
               {value && (
                 <IconButton
                   aria-label="save secret"
-                  onClick={handleClickSaveIcon}
+                  onMouseDownCapture={handleClickSaveIcon}
                   onMouseDown={handleMouseDownSave}
                   edge="end"
                   sx={{ mr: -4 }}

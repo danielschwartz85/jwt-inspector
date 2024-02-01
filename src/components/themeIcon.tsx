@@ -13,7 +13,7 @@ export function ThemeIcon(props: IThemeIconProps) {
     <IconButton
       aria-label="delete"
       sx={(them) => ({ position: 'absolute', top: them.spacing(3), right: them.spacing(3) })}
-      onClick={onClick}
+      onMouseDown={onClick}
     >
       {isDarkMode ? <WbSunnyOutlined color="secondary" /> : <DarkModeOutlined />}
     </IconButton>
