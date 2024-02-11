@@ -126,7 +126,7 @@ export default function SecretInput(props: ISecretInputProps) {
             <IconButton
               aria-label="delete secret"
               title="Delete"
-              onClick={() => handleClickDelete(option)}
+              onMouseDown={() => handleClickDelete(option)}
               edge="end"
             >
               <DeleteForever color="secondary" fontSize="small" />

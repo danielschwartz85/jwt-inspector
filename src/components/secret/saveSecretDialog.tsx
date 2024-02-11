@@ -140,7 +140,7 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onMouseDown={handleClose}>Cancel</Button>
         <Button onClick={handleSaveClick}>Save</Button>
       </DialogActions>
     </Dialog>
