@@ -23,7 +23,7 @@ export default function ConfirmDeleteDialog(props: IConfirmDeleteDialog) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onMouseDown={handleClose}>Cancel</Button>
         <Button onClick={handleDelete} autoFocus>
           Delete
         </Button>
