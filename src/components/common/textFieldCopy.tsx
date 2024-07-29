@@ -5,6 +5,7 @@ import { useState } from 'react'
 export type ITextFieldCopyProps = Omit<TextFieldProps, 'onChange'> & {
   onChange: (value: string) => void
   ariaLabel?: string
+  title?: string
 }
 
 export default function TextFieldCopy(props: ITextFieldCopyProps) {
@@ -50,6 +51,7 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
       InputProps={{
         endAdornment: <CopyButton value={value} visible={!error && isHovered} />,
       }}
+      title={props.title}
     />
   )
 }

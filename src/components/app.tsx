@@ -50,6 +50,14 @@ export default function App() {
     dispatch({ type: 'secretChange', secret, encoded })
   }
 
+  const parsedPayload = state.payload ? safeJsonParse(state.payload) : undefined
+  const exp = Number.isInteger(parsedPayload?.exp) 
+    ? new Date((parsedPayload as Record<string, number>).exp * 1000) 
+    : undefined
+  const iat = Number.isInteger(parsedPayload?.iat) 
+    ? new Date((parsedPayload as Record<string, number>).iat * 1000) 
+    : undefined
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -81,6 +89,8 @@ export default function App() {
               <Decoded
                 payload={state.payload}
                 header={state.header}
+                exp={exp}
+                iat={iat}
                 onHeaderChange={onHeaderChange}
                 onPayloadChange={onPayloadChange}
               />

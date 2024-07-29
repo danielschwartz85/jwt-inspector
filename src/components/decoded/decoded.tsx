@@ -6,6 +6,8 @@ import TextFieldCopy from '../common/textFieldCopy'
 export interface IDecodedProps {
   payload: string
   header: string
+  exp?: Date
+  iat?: Date
   onPayloadChange: (payload: string) => void
   onHeaderChange: (header: string) => void
 }
@@ -20,7 +22,7 @@ export function isValid(str: string): boolean {
 }
 
 export default function JwtInput(props: IDecodedProps) {
-  const { payload, header, onHeaderChange, onPayloadChange } = props
+  const { payload, header, exp, iat, onHeaderChange, onPayloadChange } = props
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     const obj = safeJsonParse(e.target.value)
@@ -35,6 +37,11 @@ export default function JwtInput(props: IDecodedProps) {
       onPayloadChange(pretty)
     }
   }
+
+  const tooltip = [
+    exp ? `🕑 Expires on ${exp?.toISOString()}` : undefined, 
+    iat ? `📝 Issued at ${iat?.toISOString()}` : ''
+  ].filter(Boolean).join('\n')
 
   return (
     <>
@@ -60,6 +67,7 @@ export default function JwtInput(props: IDecodedProps) {
             error={!isValid(payload)}
             onChange={onPayloadChange}
             onBlur={onBlur}
+            title={tooltip}
           />
         </Stack>
       </StyledCard>
