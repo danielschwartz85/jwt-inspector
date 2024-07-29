@@ -1,4 +1,4 @@
-import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 import createTheme, { Theme } from '@mui/material/styles/createTheme'
 import { DarkTheme, LightTheme } from '../../src/theme'
