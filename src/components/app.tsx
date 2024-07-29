@@ -5,7 +5,7 @@ import { useReducer } from 'react'
 import Encoded, { IEncodedProps } from './encoded/encoded'
 import Decoded, { IDecodedProps } from './decoded/decoded'
 import Secret, { ISecretProps } from './secret/secret'
-import { decode, encode as sign, safeJsonParse, isVerified as verify, isNumber } from '../src/util'
+import { decode, encode as sign, safeJsonParse, isVerified as verify } from '../src/util'
 import { DefaultState, reducer } from '../src/state'
 import { ThemeIcon } from './themeIcon'
 import { useLocalUserTheme } from './common/common'
@@ -51,9 +51,12 @@ export default function App() {
   }
 
   const parsedPayload = state.payload ? safeJsonParse(state.payload) : undefined
-  const expTime = parsedPayload?.exp || parsedPayload?.expiration || parsedPayload?.expire
-  const exp = isNumber(expTime) ? new Date(expTime * 1000) : undefined
-  const iat = isNumber(parsedPayload?.iat) ? new Date(parsedPayload.iat as number * 1000) : undefined
+  const exp = Number.isInteger(parsedPayload?.exp) 
+    ? new Date((parsedPayload as Record<string, number>).exp * 1000) 
+    : undefined
+  const iat = Number.isInteger(parsedPayload?.iat) 
+    ? new Date((parsedPayload as Record<string, number>).iat * 1000) 
+    : undefined
 
   return (
     <ThemeProvider theme={theme}>
