@@ -27,33 +27,33 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
   }
   const onMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHovered(false)
-    rest.onMouseEnter?.(e)
+    rest.onMouseLeave?.(e)
   }
 
   return (
-    <TextField
-      {...rest}
-      // If we use "DefaultValue" we can't control the TextField
-      // If we use "value" in the TextField then we loose undo/redo and have a cursor bug.
-      defaultValue={isActive ? value : undefined}
-      value={!isActive ? value : undefined}
-      multiline
-      error={error}
-      fullWidth={true}
-      spellCheck={false}
-      onChange={(e) => onChange(e.target.value)}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      sx={{
-        '& textarea.MuiInputBase-inputMultiline': { mr: 5, fontFamily: '"Fira Code", monospace' },
-      }}
-      inputProps={ariaLabel ? { 'aria-label': ariaLabel, ...props.inputProps } : undefined}
-      InputProps={{
+      <TextField
+        {...rest}
+        // If we use "DefaultValue" we can't control the TextField
+        // If we use "value" in the TextField then we loose undo/redo and have a cursor bug.
+        defaultValue={isActive ? value : undefined}
+        value={!isActive ? value : undefined}
+        multiline
+        error={error}
+        fullWidth={true}
+        spellCheck={false}
+        onChange={(e) => onChange(e.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        sx={{
+          '& textarea.MuiInputBase-inputMultiline': { mr: 5, fontFamily: '"Fira Code", monospace' },
+        }}
+        inputProps={ariaLabel ? { 'aria-label': ariaLabel, ...props.inputProps } : undefined}
+        InputProps={{
         endAdornment: <CopyButton value={value} visible={!error && isHovered} />,
       }}
-      title={props.title}
-    />
+        title={props.title}
+      />
   )
 }
