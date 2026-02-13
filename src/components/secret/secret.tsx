@@ -9,14 +9,24 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
 
+const popIn = {
+  '@keyframes popIn': {
+    '0%': { opacity: 0, transform: 'scale(0.4)' },
+    '70%': { transform: 'scale(1.1)' },
+    '100%': { opacity: 1, transform: 'scale(1)' },
+  },
+  animation: 'popIn 0.4s ease-out',
+} as const
+
 export interface ISecretProps {
   value?: string
   isVerified: boolean
+  verifiedTick: number
   onChange: (secret: string) => void
 }
 
 export default function Secret(props: ISecretProps) {
-  const { value, onChange, isVerified } = props
+  const { value, onChange, isVerified, verifiedTick } = props
   const theme = useTheme()
   const greaterThanMid = useMediaQuery(theme.breakpoints.up('md'))
   const iconRightMargin = greaterThanMid ? 2 : 0
@@ -31,7 +41,11 @@ export default function Secret(props: ISecretProps) {
           </Grid>
           <Grid item sx={{ ml: 'auto', px: 1 }}>
             {isVerified ? (
-              <Typography variant={'h6'} sx={{ color: 'success.main', fontWeight: '400' }}>
+              <Typography
+                key={verifiedTick}
+                variant={'h6'}
+                sx={{ color: 'success.main', fontWeight: '400', ...popIn }}
+              >
                 Verified
               </Typography>
             ) : (
@@ -42,7 +56,10 @@ export default function Secret(props: ISecretProps) {
           </Grid>
           <Grid item md={'auto'} xs={'auto'}>
             {isVerified ? (
-              <CheckCircleOutline sx={{ pr: iconRightMargin, fontSize: 30, color: 'success.main' }} />
+              <CheckCircleOutline
+                key={verifiedTick}
+                sx={{ pr: iconRightMargin, fontSize: 30, color: 'success.main', ...popIn }}
+              />
             ) : (
               <ErrorOutline sx={{ pr: iconRightMargin, fontSize: 30, color: 'error.main' }} />
             )}

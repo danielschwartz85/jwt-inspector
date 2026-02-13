@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import CopyButton from '../common/copyButton'
 
-const JWT_COLORS = ['#01c5fb', '#3aff75', '#f18100'] as const
+// JWT part colors are defined in src/src/theme.ts
 
 export interface IColoredJwtProps {
   value?: string
@@ -77,6 +77,7 @@ export default function ColoredJwt(props: IColoredJwtProps) {
   const pad = isFocused ? '15.5px 13px' : '16.5px 14px'
   const padRight = isFocused ? '55px' : '56px'
 
+  const jwtColors = [theme.jwt.header, theme.jwt.payload, theme.jwt.signature]
   const parts = splitJwt(displayValue)
   const showPlaceholder = !displayValue && !!placeholder
 
@@ -136,7 +137,7 @@ export default function ColoredJwt(props: IColoredJwtProps) {
           </Box>
         ) : (
           parts.map((part, i) => (
-            <Box key={i} component="span" sx={{ color: JWT_COLORS[i] || JWT_COLORS[2] }}>
+            <Box key={i} component="span" sx={{ color: jwtColors[i] || jwtColors[2] }}>
               {part}
             </Box>
           ))

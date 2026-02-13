@@ -1,6 +1,15 @@
 import { orange } from '@mui/material/colors'
 import { ThemeOptions } from '@mui/material/styles/createTheme'
 
+declare module '@mui/material/styles' {
+  interface Theme {
+    jwt: { header: string; payload: string; signature: string }
+  }
+  interface ThemeOptions {
+    jwt?: { header: string; payload: string; signature: string }
+  }
+}
+
 export const DarkTheme: ThemeOptions = {
   palette: {
     mode: 'dark',
@@ -10,6 +19,11 @@ export const DarkTheme: ThemeOptions = {
     text: {
       primary: orange[400],
     },
+  },
+  jwt: {
+    header: '#2490dd',
+    payload: '#3aff75',
+    signature: '#ff893a',
   },
   components: {
     MuiTextField: {
@@ -37,5 +51,10 @@ export const LightTheme: ThemeOptions = {
       default: '#fafafa',
       paper: '#FFFFFF',
     },
+  },
+  jwt: {
+    header: '#fe1900',
+    payload: '#17cb71',
+    signature: '#00b3ff',
   },
 }
