@@ -46,7 +46,9 @@ export default function TextFieldCopy(props: ITextFieldCopyProps) {
       onBlur={onBlur}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      sx={{ '& textarea.MuiInputBase-inputMultiline': { mr: 5 } }}
+      sx={{
+        '& textarea.MuiInputBase-inputMultiline': { mr: 5, fontFamily: '"Fira Code", monospace' },
+      }}
       inputProps={ariaLabel ? { 'aria-label': ariaLabel, ...props.inputProps } : undefined}
       InputProps={{
         endAdornment: <CopyButton value={value} visible={!error && isHovered} />,

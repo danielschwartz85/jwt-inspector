@@ -11,6 +11,8 @@ import { SecretManager } from '../../src/util'
 
 export const StyledHeader = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
+  fontFamily: '"Fira Code", monospace',
+  fontWeight: 200,
 }))
 
 export function StyledCard({ children }: { children?: React.ReactElement }) {
