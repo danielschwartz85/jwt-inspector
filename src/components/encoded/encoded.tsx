@@ -1,6 +1,6 @@
-import { DisableGrammarlyProps, StyledCard, StyledHeader } from '../common/common'
+import { StyledCard, StyledHeader } from '../common/common'
 import { useMemo, useState } from 'react'
-import TextFieldCopy from '../common/textFieldCopy'
+import ColoredJwt from './coloredJwt'
 
 export interface IEncodedProps {
   value?: string
@@ -24,16 +24,14 @@ export default function Encoded(props: IEncodedProps) {
     <>
       <StyledHeader variant="h4">{'Encoded'}</StyledHeader>
       <StyledCard>
-        <TextFieldCopy
+        <ColoredJwt
           value={isAppStart ? '' : value}
           placeholder="Paste JWT.."
-          rows={10}
           error={error}
           onChange={onChange}
           ariaLabel="encoded input"
           inputRef={(input) => isAppStart && input?.focus()}
           onBlur={onBlur}
-          inputProps={DisableGrammarlyProps}
         />
       </StyledCard>
     </>
