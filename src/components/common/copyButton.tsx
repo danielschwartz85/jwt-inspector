@@ -15,7 +15,8 @@ export default function CopyButton(props: ICopyButtonProps) {
   const { value, visible = true } = props
   const [isTooltipOpen, setTooltipOpen] = useState(false)
 
-  const handleClickCopy = () => {
+  const handleClickCopy = (e: React.MouseEvent) => {
+    e.preventDefault()
     if (!value) return
     navigator.clipboard.writeText(value.toString())
     handleTooltipOpen()
