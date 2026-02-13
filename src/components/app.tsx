@@ -97,7 +97,7 @@ export default function App() {
             </Grid>
           </Grid>
           <Grid item>
-            <Secret value={state.secret} isVerified={state.isVerified} onChange={onSecretChange} />
+            <Secret value={state.secret} isVerified={state.isVerified} verifiedTick={state.verifiedTick} onChange={onSecretChange} />
             <Typography variant={'caption'} sx={{ display: 'block', mt: 4, fontFamily: '"Fira Code", monospace' }}>
               Daniel Schwartz Inc 🚀 Copyright © 2026, All Rights Are All Right!
             </Typography>
