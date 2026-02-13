@@ -51,6 +51,7 @@ function TextWithSave(props: ITextWithSaveProps) {
       <TextField
         {...rest}
         inputProps={{ ...DisableGrammarlyProps, ...rest.inputProps }}
+        sx={{ '& input': { fontFamily: '"Fira Code", monospace' }, ...rest.sx }}
         InputProps={{
           ...InputProps,
           endAdornment: (
@@ -138,7 +139,7 @@ export default function SecretInput(props: ISecretInputProps) {
         value={savedSecret?.label || value}
         renderInput={(params) =>
           savedSecret ? (
-            <TextField {...params} />
+            <TextField {...params} sx={{ '& input': { fontFamily: '"Fira Code", monospace' } }} />
           ) : (
             <TextWithSave onSave={onSecretSave} value={value} {...params} />
           )

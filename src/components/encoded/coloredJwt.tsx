@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import CopyButton from '../common/copyButton'
 
-const JWT_COLORS = ['#fb015b', '#d63aff', '#00b9f1'] as const
+const JWT_COLORS = ['#01c5fb', '#3aff75', '#f18100'] as const
 
 export interface IColoredJwtProps {
   value?: string
@@ -110,7 +110,7 @@ export default function ColoredJwt(props: IColoredJwtProps) {
           inset: 0,
           p: pad,
           pr: padRight,
-          fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+          fontFamily: '"Fira Code", monospace',
           fontSize: '1rem',
           lineHeight: 1.5,
           letterSpacing: '0.00938em',
@@ -121,7 +121,17 @@ export default function ColoredJwt(props: IColoredJwtProps) {
         }}
       >
         {showPlaceholder ? (
-          <Box component="span" sx={{ color: 'text.disabled' }}>
+          <Box
+            component="span"
+            sx={{
+              color: 'text.disabled',
+              '@keyframes blink': {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0 },
+              },
+              animation: 'blink 1.2s ease-in-out infinite',
+            }}
+          >
             {placeholder}
           </Box>
         ) : (
@@ -155,7 +165,7 @@ export default function ColoredJwt(props: IColoredJwtProps) {
           height: '240px',
           padding: pad,
           paddingRight: padRight,
-          fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+          fontFamily: '"Fira Code", monospace',
           fontSize: '1rem',
           lineHeight: 1.5,
           letterSpacing: '0.00938em',

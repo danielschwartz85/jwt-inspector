@@ -83,12 +83,14 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>Save secret</DialogTitle>
+      <DialogTitle sx={{ fontFamily: '"Fira Code", monospace' }}>Save secret</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText sx={{ fontFamily: '"Fira Code", monospace' }}>
           Your secret will be saved in local storage and deleted after the expiration date.
         </DialogContentText>
-        <DialogContentText>Note: saved secrets are not visible.</DialogContentText>
+        <DialogContentText sx={{ fontFamily: '"Fira Code", monospace' }}>
+          Note: saved secrets are not visible.
+        </DialogContentText>
         <Grid
           item
           container
@@ -104,7 +106,10 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
               value={state.label}
               onChange={onLabelChange}
               error={state.isError && !state.label}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+                '& input, & label': { fontFamily: '"Fira Code", monospace' },
+              }}
               inputRef={(input) => state.isOpened && input?.focus()}
               id="label"
               label="Label"
@@ -118,7 +123,10 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
               value={state.value}
               error={state.isError && !state.value}
               onChange={onValueChange}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+                '& input, & label': { fontFamily: '"Fira Code", monospace' },
+              }}
               id="secret"
               label="Value"
               variant="standard"
@@ -127,14 +135,31 @@ export default function SaveSecretDialog(props: ISaveSecretDialog) {
           </Grid>
           <Grid item sm={'auto'} xs={12}>
             <FormControl>
-              <Select value={state.expiration} variant="standard" onChange={onExpirationChange}>
-                <MenuItem value={EExpiration.Hour}>1 hour</MenuItem>
-                <MenuItem value={EExpiration.Day}>1 day</MenuItem>
-                <MenuItem value={EExpiration.Week}>1 week</MenuItem>
-                <MenuItem value={EExpiration.Month}>1 month</MenuItem>
-                <MenuItem value={EExpiration.Year}>1 year</MenuItem>
+              <Select
+                value={state.expiration}
+                variant="standard"
+                onChange={onExpirationChange}
+                sx={{ fontFamily: '"Fira Code", monospace' }}
+              >
+                <MenuItem sx={{ fontFamily: '"Fira Code", monospace' }} value={EExpiration.Hour}>
+                  1 hour
+                </MenuItem>
+                <MenuItem sx={{ fontFamily: '"Fira Code", monospace' }} value={EExpiration.Day}>
+                  1 day
+                </MenuItem>
+                <MenuItem sx={{ fontFamily: '"Fira Code", monospace' }} value={EExpiration.Week}>
+                  1 week
+                </MenuItem>
+                <MenuItem sx={{ fontFamily: '"Fira Code", monospace' }} value={EExpiration.Month}>
+                  1 month
+                </MenuItem>
+                <MenuItem sx={{ fontFamily: '"Fira Code", monospace' }} value={EExpiration.Year}>
+                  1 year
+                </MenuItem>
               </Select>
-              <FormHelperText>Delete after</FormHelperText>
+              <FormHelperText sx={{ fontFamily: '"Fira Code", monospace' }}>
+                Delete after
+              </FormHelperText>
             </FormControl>
           </Grid>
         </Grid>
