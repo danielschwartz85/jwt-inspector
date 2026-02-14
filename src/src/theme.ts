@@ -53,8 +53,8 @@ export const LightTheme: ThemeOptions = {
     },
   },
   jwt: {
-    header: '#fe1900',
-    payload: '#17cb71',
-    signature: '#00b3ff',
+    header: '#df0c01',
+    payload: '#0b8246',
+    signature: '#097aaa',
   },
 }
